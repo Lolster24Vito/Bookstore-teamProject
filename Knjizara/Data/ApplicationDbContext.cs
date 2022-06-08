@@ -14,5 +14,17 @@ namespace Knjizara.Data
         }
         public DbSet<Book> Books { get; set; }
         public DbSet<Author> Authors { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Author>()
+             .HasMany(c => c.Books)
+            .WithOne(e => e.Author);
+
+            modelBuilder.Entity<Book>().HasOne(e => e.Author).
+                WithMany(a=>a.Books).HasForeignKey(b=>b.AuthorId);
+            base.OnModelCreating(modelBuilder);
+
+        }
     }
 }

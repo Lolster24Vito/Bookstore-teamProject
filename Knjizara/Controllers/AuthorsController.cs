@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Knjizara.Data;
 using Knjizara.Models.BaseEntities;
+using Knjizara.Models.Books;
 
 namespace Knjizara.Controllers
 {
@@ -27,6 +28,33 @@ namespace Knjizara.Controllers
                           Problem("Entity set 'ApplicationDbContext.Authors'  is null.");
         }
 
+        /* 
+        private async Task<Author> GetAuthorAsync(int id)
+        {
+             if (id == null || _context.Authors == null)
+              {
+                  return null;
+              }
+
+              var author = await _context.Authors
+                  .FirstOrDefaultAsync(m => m.Id == id);
+              author.Books = new List<Book>();
+              // author.Books = await _context.Books.FirstOrDefaultAsync(t => author.Id == t.AuthorId);
+
+
+              if (author == null)
+              {
+                  return null;
+              }
+              var bookQuery = author.Books.Where(x => x.AuthorId == author.Id);
+
+
+              author.Books = bookQuery.ToList();
+              return author;
+
+
+          }  */
+
         // GET: Authors/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -37,10 +65,20 @@ namespace Knjizara.Controllers
 
             var author = await _context.Authors
                 .FirstOrDefaultAsync(m => m.Id == id);
+            author.Books = new List<Book>();
+            // author.Books = await _context.Books.FirstOrDefaultAsync(t => author.Id == t.AuthorId);
+
+            /*List<Book> bookQuery= (from author.Books
+                          where books.AuthorId == author.Id
+                          select books).ToList();*/
             if (author == null)
             {
                 return NotFound();
             }
+            var bookQuery = _context.Books.Where(x => x.AuthorId==author.Id);
+
+
+            author.Books = bookQuery.ToList();
 
             return View(author);
         }
