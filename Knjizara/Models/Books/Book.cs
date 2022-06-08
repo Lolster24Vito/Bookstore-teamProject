@@ -20,11 +20,7 @@ namespace Knjizara.Models.Books
         public string Title { get; set; }
 
 
-        [Display(Name = "Autor")]
-
-        [JsonProperty("AUTHOR")]
-        [ForeignKey("AuthorId")]
-        public virtual Author? Author { get; set; }
+      
 
         [Display(Name = "ISBN")]
         [StringLength(maximumLength:15, MinimumLength = 10)]
@@ -49,5 +45,14 @@ namespace Knjizara.Models.Books
         [StringLength(5000)]
 
         public string? ShortDescription { get; set; }
+
+        //navigation properties
+        [ForeignKey("AuthorId")]
+        public int AuthorId { get; set; }
+
+        [Display(Name = "Autor")]
+
+        [JsonProperty("AUTHOR")]
+        public Author Author { get; set; }
     }
 }
