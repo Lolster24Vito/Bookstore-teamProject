@@ -52,7 +52,8 @@
                 @Html.DisplayFor(modelItem => item.Isbn)
             </td>
                         <td>
-                @Html.DisplayFor(modelItem => item.Author.Name)
+            @Html.ActionLink(item.Author.Name, "Details", "Authors", new {id = item.AuthorId}, null)
+
             </td>
 
             <td>
