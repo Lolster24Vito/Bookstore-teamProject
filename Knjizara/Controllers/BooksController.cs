@@ -115,28 +115,35 @@ namespace Knjizara.Controllers
             {
                 return NotFound();
             }
+                    var dbAuthor = _context.Authors
+                   .Where(x => x.Name == authorName)
+                   .FirstOrDefault();
+            if (dbAuthor != null)
+            {
+                book.Author = dbAuthor;
+            }
+            else
+            {
+                Author editedAuthor = new Author(authorName);
 
+                _context.Add(editedAuthor);
+                _context.SaveChanges();
+                book.AuthorId=editedAuthor.Id;
+            }
+          
             if (ModelState.IsValid)
             {
                 try
                 {
 
 
-                    var dbAuthor = _context.Authors
-                   .Where(x => x.Name == authorName)
-                   .FirstOrDefault();
                     if (dbAuthor != null)
                     {
                         _context.Update(book.Author);
-                        book.Author = dbAuthor;
+                        _context.SaveChanges();
 
                     }
-                    else
-                    {
-                        Author editedAuthor = new Author(authorName);
-                        book.Author= editedAuthor;
-                        _context.Add(editedAuthor);
-                    }
+
                     _context.Update(book);
                     await _context.SaveChangesAsync();
                 }
