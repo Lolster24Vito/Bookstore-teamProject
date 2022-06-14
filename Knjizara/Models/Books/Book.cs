@@ -53,6 +53,6 @@ namespace Knjizara.Models.Books
         [Display(Name = "Autor")]
 
         [JsonProperty("AUTHOR")]
-        public Author Author { get; set; }
+        public Author? Author { get; set; }
     }
 }
