@@ -57,6 +57,33 @@ namespace Knjizara.Controllers
         }
 
 
+        // GET: Authors/Details/5
+        public async Task<IActionResult> AuthorDetails(int? id)
+        {
+            if (id == null || _context.Authors == null)
+            {
+                return NotFound();
+            }
+
+            var author = await _context.Authors
+                .FirstOrDefaultAsync(m => m.Id == id);
+            author.Books = new List<Book>();
+
+            if (author == null)
+            {
+                return NotFound();
+            }
+            var bookQuery = _context.Books.Where(x => x.AuthorId == author.Id);
+
+
+            author.Books = bookQuery.ToList();
+
+            return View(author);
+        }
+
+
+
+
         public async Task<IActionResult> Buy(int? id)
         {
             if (id == null || _context.Books == null)
