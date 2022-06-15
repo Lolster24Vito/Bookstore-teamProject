@@ -20,11 +20,22 @@ namespace Knjizara.Controllers
         }
 
         // GET: Shop
-        public async Task<IActionResult> Index()
+
+        public async Task<IActionResult> IndexAsync(string? searchString)
         {
+            if (String.IsNullOrEmpty(searchString))
+            {
             var applicationDbContext = _context.Books.Include(b => b.Author);
-            return View(await applicationDbContext.ToListAsync());
+                return View(await applicationDbContext.ToListAsync());
+            }
+            else
+            {
+                var applicationDbContext = _context.Books.Include(b => b.Author).Where(b=>b.Title.Contains(searchString));
+                return View(await applicationDbContext.ToListAsync());
+
+            }
         }
+
 
         // GET: Shop/Details/5
         public async Task<IActionResult> Details(int? id)
