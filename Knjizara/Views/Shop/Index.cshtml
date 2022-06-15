@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Knjizara.Models.Books.Book>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Isbn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PriceForBorrowing)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PriceForBuying)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StockAvailabilty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CoverURL)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LongDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShortDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Author)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Isbn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PriceForBorrowing)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PriceForBuying)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StockAvailabilty)
+            </td>
+            <td>
+            <img src=Model.CoverURL asp-append-version="true">
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LongDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShortDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author.Name)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

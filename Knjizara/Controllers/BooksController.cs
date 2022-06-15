@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Knjizara.Data;
 using Knjizara.Models.Books;
 using Knjizara.Models.BaseEntities;
+using Knjizara.Models.ViewModels;
+
 
 namespace Knjizara.Controllers
 {
@@ -40,6 +42,7 @@ namespace Knjizara.Controllers
 
             var book = await _context.Books.Include(_x => _x.Author)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (book == null)
             {
                 return NotFound();
@@ -64,11 +67,10 @@ namespace Knjizara.Controllers
         {
             if (ModelState.IsValid)
             {
-                //MISSING LOGIC
-                //if(autor exists dont add new author to database) Add Book To authors works
                 var dbAuthor = _context.Authors
                  .Where(x => x.Name == authorName)
                  .FirstOrDefault();
+
                 if (dbAuthor != null)
                 {
                     book.Author = dbAuthor;
@@ -101,7 +103,13 @@ namespace Knjizara.Controllers
             {
                 return NotFound();
             }
-            return View(book);
+            var author = await _context.Authors.FindAsync(book.AuthorId);
+            if (author == null)
+            {
+                return NotFound();
+            }
+
+            return View(new CollectionBookAuthor(book,author));
         }
 
         // POST: Books/Edit/5
@@ -137,12 +145,7 @@ namespace Knjizara.Controllers
                 {
 
 
-                    if (dbAuthor != null)
-                    {
-                        _context.Update(book.Author);
-                        _context.SaveChanges();
 
-                    }
 
                     _context.Update(book);
                     await _context.SaveChangesAsync();

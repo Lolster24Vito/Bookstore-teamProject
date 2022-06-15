@@ -1,4 +1,4 @@
-﻿@model Knjizara.Models.Books.Book
+﻿@model Knjizara.Models.ViewModels.CollectionBookAuthor;
 
 @{
     ViewData["Title"] = "Edit";
@@ -13,16 +13,16 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Book.Id" />
             <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+                <label asp-for="Book.Title" class="control-label"></label>
+                <input asp-for="Book.Title" class="form-control" />
+                <span asp-validation-for="Book.Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Isbn" class="control-label"></label>
-                <input asp-for="Isbn" class="form-control" />
-                <span asp-validation-for="Isbn" class="text-danger"></span>
+                <label asp-for="Book.Isbn" class="control-label"></label>
+                <input asp-for="Book.Isbn" class="form-control" />
+                <span asp-validation-for="Book.Isbn" class="text-danger"></span>
             </div>
                         <div class="form-group">
                 <label asp-for="Author.Name" class="control-label"></label>
@@ -31,34 +31,36 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="PriceForBorrowing" class="control-label"></label>
-                <input asp-for="PriceForBorrowing" class="form-control" />
-                <span asp-validation-for="PriceForBorrowing" class="text-danger"></span>
+                <label asp-for="Book.PriceForBorrowing" class="control-label"></label>
+                <input asp-for="Book.PriceForBorrowing" class="form-control" />
+                <span asp-validation-for="Book.PriceForBorrowing"  class="text-danger"></span>
+
+
             </div>
             <div class="form-group">
-                <label asp-for="PriceForBuying" class="control-label"></label>
-                <input asp-for="PriceForBuying" class="form-control" />
-                <span asp-validation-for="PriceForBuying" class="text-danger"></span>
+                <label asp-for="Book.PriceForBuying" class="control-label"></label>
+                <input asp-for="Book.PriceForBuying" class="form-control" />
+                <span asp-validation-for="Book.PriceForBuying" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="StockAvailabilty" class="control-label"></label>
-                <input asp-for="StockAvailabilty" class="form-control" />
-                <span asp-validation-for="StockAvailabilty" class="text-danger"></span>
+                <label asp-for="Book.StockAvailabilty" class="control-label"></label>
+                <input asp-for="Book.StockAvailabilty" class="form-control" />
+                <span asp-validation-for="Book.StockAvailabilty" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CoverURL" class="control-label"></label>
-                <input asp-for="CoverURL" class="form-control" />
-                <span asp-validation-for="CoverURL" class="text-danger"></span>
+                <label asp-for="Book.CoverURL" class="control-label"></label>
+                <input asp-for="Book.CoverURL" class="form-control" />
+                <span asp-validation-for="Book.CoverURL" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LongDescription" class="control-label"></label>
-                <input asp-for="LongDescription" class="form-control" />
-                <span asp-validation-for="LongDescription" class="text-danger"></span>
+                <label asp-for="Book.LongDescription" class="control-label"></label>
+                <input asp-for="Book.LongDescription" class="form-control" />
+                <span asp-validation-for="Book.LongDescription" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ShortDescription" class="control-label"></label>
-                <input asp-for="ShortDescription" class="form-control" />
-                <span asp-validation-for="ShortDescription" class="text-danger"></span>
+                <label asp-for="Book.ShortDescription" class="control-label"></label>
+                <input asp-for="Book.ShortDescription" class="form-control" />
+                <span asp-validation-for="Book.ShortDescription" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
