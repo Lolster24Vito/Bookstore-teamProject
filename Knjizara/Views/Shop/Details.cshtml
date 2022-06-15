@@ -1,0 +1,84 @@
+﻿@model Knjizara.Models.Books.Book
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+<div>
+    <h4>Book</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Isbn)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Isbn)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PriceForBorrowing)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PriceForBorrowing)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PriceForBuying)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PriceForBuying)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.StockAvailabilty)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StockAvailabilty)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CoverURL)
+        </dt>
+        <dd class = "col-sm-10">
+            <img src=@Model.CoverURL asp-append-version="true">
+        </dd>
+
+         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Author.Name)
+        </dt>
+        <dd class = "col-sm-10">
+           
+            @Html.ActionLink(Model.Author.Name, "Details", "Authors", new {id = Model.AuthorId}, null)
+
+        </dd>
+
+                 <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Author.Id)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Author.Id)
+        </dd>
+
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LongDescription)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LongDescription)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ShortDescription)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ShortDescription)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Buy" asp-route-id="@Model?.Id">Buy</a> |
+    <a asp-action="Borrow" asp-route-id="@Model?.Id">Borrow</a> |
+
+    <a asp-action="Index">Back to List</a>
+</div>
