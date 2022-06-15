@@ -66,11 +66,7 @@ namespace Knjizara.Controllers
             var author = await _context.Authors
                 .FirstOrDefaultAsync(m => m.Id == id);
             author.Books = new List<Book>();
-            // author.Books = await _context.Books.FirstOrDefaultAsync(t => author.Id == t.AuthorId);
 
-            /*List<Book> bookQuery= (from author.Books
-                          where books.AuthorId == author.Id
-                          select books).ToList();*/
             if (author == null)
             {
                 return NotFound();
@@ -82,6 +78,8 @@ namespace Knjizara.Controllers
 
             return View(author);
         }
+
+
 
         // GET: Authors/Create
         public IActionResult Create()

@@ -6,9 +6,15 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
+@using (Html.BeginForm())  
+{  
+    <p>  
+        Search: @Html.TextBox("SearchString")  
+        <input type="submit" value="Search" />  
+    </p>  
+}  
+
 <table class="table">
     <thead>
         <tr>
@@ -61,7 +67,8 @@
                 @Html.DisplayFor(modelItem => item.StockAvailabilty)
             </td>
             <td>
-            <img src=Model.CoverURL asp-append-version="true">
+                <!-- TODO: if empty or invalid show default image -->
+            <img src= @item.CoverURL asp-append-version="true" width="100">
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.LongDescription)
@@ -70,10 +77,11 @@
                 @Html.DisplayFor(modelItem => item.ShortDescription)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Author.Name)
+             <a asp-action="AuthorDetails" asp-route-id="@item.AuthorId">@item.Author.Name</a> 
+
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
             </td>
         </tr>
 }

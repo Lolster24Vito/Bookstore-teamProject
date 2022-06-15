@@ -20,11 +20,22 @@ namespace Knjizara.Controllers
         }
 
         // GET: Shop
-        public async Task<IActionResult> Index()
+
+        public async Task<IActionResult> IndexAsync(string? searchString)
         {
+            if (String.IsNullOrEmpty(searchString))
+            {
             var applicationDbContext = _context.Books.Include(b => b.Author);
-            return View(await applicationDbContext.ToListAsync());
+                return View(await applicationDbContext.ToListAsync());
+            }
+            else
+            {
+                var applicationDbContext = _context.Books.Include(b => b.Author).Where(b=>b.Title.Contains(searchString));
+                return View(await applicationDbContext.ToListAsync());
+
+            }
         }
+
 
         // GET: Shop/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -44,6 +55,33 @@ namespace Knjizara.Controllers
 
             return View(book);
         }
+
+
+        // GET: Authors/Details/5
+        public async Task<IActionResult> AuthorDetails(int? id)
+        {
+            if (id == null || _context.Authors == null)
+            {
+                return NotFound();
+            }
+
+            var author = await _context.Authors
+                .FirstOrDefaultAsync(m => m.Id == id);
+            author.Books = new List<Book>();
+
+            if (author == null)
+            {
+                return NotFound();
+            }
+            var bookQuery = _context.Books.Where(x => x.AuthorId == author.Id);
+
+
+            author.Books = bookQuery.ToList();
+
+            return View(author);
+        }
+
+
 
 
         public async Task<IActionResult> Buy(int? id)
