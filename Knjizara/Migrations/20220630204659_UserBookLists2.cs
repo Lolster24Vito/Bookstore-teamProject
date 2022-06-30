@@ -9,6 +9,8 @@ namespace Knjizara.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+                        migrationBuilder.DropTable(
+                name: "BookUserItem");
 
             migrationBuilder.CreateTable(
                 name: "BookUserBorrowTransaction",
