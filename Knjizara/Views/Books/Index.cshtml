@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<Knjizara.Models.Books.Book>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Books";
 }
 
-<h1>Index</h1>
+<h1>Books</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -52,7 +52,7 @@
                 @Html.DisplayFor(modelItem => item.Isbn)
             </td>
                         <td>
-            @Html.ActionLink(item.Author.Name, "Details", "Authors", new {id = item.AuthorId}, null)
+            @Html.ActionLink(item.Author.Name, "Details", "Authors", new {id = item?.AuthorId}, null)
 
             </td>
 

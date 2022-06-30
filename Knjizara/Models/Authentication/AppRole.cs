@@ -8,6 +8,6 @@ namespace Knjizara.Models.Authentication
         [Display(Name = "Opis")]
         [StringLength(250)]
         [Required]
-        public string Description { get; set; }
+        public string? Description { get; set; }
     }
 }

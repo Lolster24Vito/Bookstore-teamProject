@@ -4,7 +4,7 @@
 
 namespace Knjizara.Migrations
 {
-    public partial class AuthorsKeyAttribute : Migration
+    public partial class JsonParsing : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

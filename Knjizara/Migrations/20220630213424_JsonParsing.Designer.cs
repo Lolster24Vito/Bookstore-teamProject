@@ -12,14 +12,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Knjizara.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220529181606_Authors")]
-    partial class Authors
+    [Migration("20220630213424_JsonParsing")]
+    partial class JsonParsing
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.5")
+                .HasAnnotation("ProductVersion", "6.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -166,14 +166,13 @@ namespace Knjizara.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("AuthorId")
+                    b.Property<int>("AuthorId")
                         .HasColumnType("int");
 
                     b.Property<string>("CoverURL")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Isbn")
-                        .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
@@ -312,8 +311,10 @@ namespace Knjizara.Migrations
             modelBuilder.Entity("Knjizara.Models.Books.Book", b =>
                 {
                     b.HasOne("Knjizara.Models.BaseEntities.Author", "Author")
-                        .WithMany()
-                        .HasForeignKey("AuthorId");
+                        .WithMany("Books")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Author");
                 });
@@ -367,6 +368,11 @@ namespace Knjizara.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Knjizara.Models.BaseEntities.Author", b =>
+                {
+                    b.Navigation("Books");
                 });
 #pragma warning restore 612, 618
         }
