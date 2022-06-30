@@ -12,14 +12,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Knjizara.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220608100225_OneToManyAuthor")]
-    partial class OneToManyAuthor
+    [Migration("20220629131736_FirstTryParsingData")]
+    partial class FirstTryParsingData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.5")
+                .HasAnnotation("ProductVersion", "6.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -173,7 +173,6 @@ namespace Knjizara.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Isbn")
-                        .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 

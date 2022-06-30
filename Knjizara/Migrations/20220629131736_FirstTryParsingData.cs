@@ -4,7 +4,7 @@
 
 namespace Knjizara.Migrations
 {
-    public partial class BooksModelAuthorVirtual : Migration
+    public partial class FirstTryParsingData : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -17,16 +17,23 @@ namespace Knjizara.Models.Books
         [StringLength(1000)]
         [Required(ErrorMessage = "Ovo polje je obavezno")]
         [JsonProperty("TITLE")]
-        public string Title { get; set; }
+        public string? Title { get; set; }
 
+        //navigation properties
+        [ForeignKey("AuthorId")]
+        public int AuthorId { get; set; }
 
-      
+        [Display(Name = "Autor")]
+
+        [JsonProperty("AUTHOR")]
+        public Author? Author { get; set; }
+
 
         [Display(Name = "ISBN")]
         [StringLength(maximumLength:15, MinimumLength = 10)]
 
         [JsonProperty("ISBN")]
-        public string Isbn { get; set; }
+        public string? Isbn { get; set; }
 
         [JsonProperty("PRICE")]
         public Decimal PriceForBorrowing { get; set; }
@@ -46,13 +53,6 @@ namespace Knjizara.Models.Books
 
         public string? ShortDescription { get; set; }
 
-        //navigation properties
-        [ForeignKey("AuthorId")]
-        public int AuthorId { get; set; }
-
-        [Display(Name = "Autor")]
-
-        [JsonProperty("AUTHOR")]
-        public Author? Author { get; set; }
+       
     }
 }

@@ -63,7 +63,7 @@ namespace Knjizara.Controllers
         {
             if (ModelState.IsValid)
             {
-                _roleManager.CreateAsync(appRole);
+                _roleManager?.CreateAsync(appRole);
                 appRole.Id = Guid.NewGuid();
                 _context.Add(appRole);
                 await _context.SaveChangesAsync();

@@ -9,7 +9,7 @@ using Knjizara.Data;
 using Knjizara.Models.Books;
 using Knjizara.Models.BaseEntities;
 using Knjizara.Models.ViewModels;
-
+using Newtonsoft.Json;
 
 namespace Knjizara.Controllers
 {
@@ -22,12 +22,13 @@ namespace Knjizara.Controllers
             _context = context;
         }
 
-        // GET: Books
+        //GET: Books
         public async Task<IActionResult> Index()
         {
-              return (_context.Books != null ? 
-                          View(await _context.Books.Include(x => x.Author).ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Books'  is null."));
+
+            return (_context.Books != null ?
+                        View(await _context.Books.Include(x => x.Author).ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.Books'  is null."));
         }
 
 
@@ -207,5 +208,7 @@ namespace Knjizara.Controllers
         {
           return (_context.Books?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+        
     }
 }

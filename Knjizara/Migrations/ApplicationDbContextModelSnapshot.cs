@@ -171,7 +171,6 @@ namespace Knjizara.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Isbn")
-                        .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
