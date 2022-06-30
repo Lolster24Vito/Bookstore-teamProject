@@ -7,16 +7,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Knjizara.Data;
 using Knjizara.Models.Books;
+using Knjizara.Models.Authentication;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using Knjizara.Models.Transactions;
 
 namespace Knjizara.Controllers
 {
     public class ShopController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public ShopController(ApplicationDbContext context)
+        private readonly UserManager<AppUser> _userManager;
+        public ShopController(ApplicationDbContext context, UserManager<AppUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Shop
@@ -83,7 +88,7 @@ namespace Knjizara.Controllers
 
 
 
-
+        [Authorize]
         public async Task<IActionResult> Buy(int? id)
         {
             if (id == null || _context.Books == null)
@@ -93,15 +98,27 @@ namespace Knjizara.Controllers
 
             var book = await _context.Books.Include(_x => _x.Author)
                 .FirstOrDefaultAsync(m => m.Id == id);
+            var currentUser = await _userManager.GetUserAsync(User);
             if (book == null)
             {
                 return NotFound();
             }
-            return View(book);
+
+
+            if (book != null && currentUser != null)
+            {
+                //ADD TRANSACTION TO DATABASE
+             _context.BookUserBuyTransaction.Add(new BookUserBuy { User = currentUser, Book = book ,CreatedAt=DateTime.Now});
+            await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction(nameof(Index));
+
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Buy(int id)
         {
             if (_context.Books == null)
@@ -111,7 +128,7 @@ namespace Knjizara.Controllers
             var book = await _context.Books.FindAsync(id);
             if (book != null)
             {
-            //Buy?
+                
             }
 
             //await _context.SaveChangesAsync();
@@ -119,7 +136,7 @@ namespace Knjizara.Controllers
         }
 
 
-
+        [Authorize]
         public async Task<IActionResult> Borrow(int? id)
         {
             if (id == null || _context.Books == null)
@@ -129,11 +146,19 @@ namespace Knjizara.Controllers
 
             var book = await _context.Books.Include(_x => _x.Author)
                 .FirstOrDefaultAsync(m => m.Id == id);
+            var currentUser = await _userManager.GetUserAsync(User);
+
             if (book == null)
             {
                 return NotFound();
             }
-            return View(book);
+            if (book != null && currentUser != null)
+            {
+                //ADD TRANSACTION TO DATABASE
+                _context.BookUserBorrowTransaction.Add(new BookUserBorrow { User = currentUser, Book = book, CreatedAt = DateTime.Now });
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Index));
         }
 
 
@@ -149,7 +174,7 @@ namespace Knjizara.Controllers
             var book = await _context.Books.FindAsync(id);
             if (book != null)
             {
-                //Borrow?
+                
             }
 
             //await _context.SaveChangesAsync();
