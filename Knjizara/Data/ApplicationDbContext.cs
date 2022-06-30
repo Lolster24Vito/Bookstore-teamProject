@@ -1,6 +1,7 @@
 ﻿using Knjizara.Models.Authentication;
 using Knjizara.Models.BaseEntities;
 using Knjizara.Models.Books;
+using Knjizara.Models.Transactions;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +15,9 @@ namespace Knjizara.Data
         }
         public DbSet<Book> Books { get; set; }
         public DbSet<Author> Authors { get; set; }
+        public DbSet<BookUserBorrow> BookUserBorrowTransaction { get; set; }
+        public DbSet<BookUserBuy> BookUserBuyTransaction { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
