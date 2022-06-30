@@ -1,4 +1,6 @@
-﻿using Knjizara.Models.BaseEntities;
+﻿using Knjizara.Models.Authentication;
+using Knjizara.Models.BaseEntities;
+using Knjizara.Models.Transactions;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,6 +11,7 @@ namespace Knjizara.Models.Books
     {
         [Key]
         [Display(Name = "Id")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required(ErrorMessage = "Ovo polje je obavezno")]
         public int Id { get; set; }
 
@@ -54,5 +57,12 @@ namespace Knjizara.Models.Books
 
         [JsonProperty("AUTHOR")]
         public Author? Author { get; set; }
+
+        [Display(Name = "Posudivaci knjige")]
+        public IList<AppUser>? UsersBorrowed { get; set; }
+
+        [Display(Name = "Kupci knjige")]
+        public IList<AppUser>? UsersPurchased { get; set; }
+
     }
 }

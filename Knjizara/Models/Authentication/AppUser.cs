@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Knjizara.Models.Books;
+using Knjizara.Models.Transactions;
+using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Knjizara.Models.Authentication
 {
@@ -17,6 +20,12 @@ namespace Knjizara.Models.Authentication
         [Display(Name = "Adresa")]
         [StringLength(350)]
         public string? Address { get; set; }
+
+        [Display(Name = "Posuđene knjige")]
+        public  IList<Book>? BorrowedBooks { get; set; }
+
+        [Display(Name = "Kupljene knjige")]
+        public  IList<Book>? PurchasedBooks { get; set; }
 
 
     }

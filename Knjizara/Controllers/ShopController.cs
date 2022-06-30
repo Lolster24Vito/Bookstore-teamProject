@@ -7,16 +7,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Knjizara.Data;
 using Knjizara.Models.Books;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Knjizara.Models.Authentication;
 
 namespace Knjizara.Controllers
 {
     public class ShopController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public ShopController(ApplicationDbContext context)
+        private readonly UserManager<AppUser> _userManager;
+        public ShopController(ApplicationDbContext context, UserManager<AppUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Shop
@@ -100,18 +104,43 @@ namespace Knjizara.Controllers
             return View(book);
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Buy(int id)
         {
             if (_context.Books == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Books'  is null.");
             }
-            var book = await _context.Books.FindAsync(id);
+            var book = await _context.Books.Include(b => b.UsersPurchased)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (book == null)
+            {
+                return NotFound();
+            }
             if (book != null)
             {
-            //Buy?
+                //ADD BOOK TO USER,AND USER TO THE BOOK
+                var currentUser = await _userManager.GetUserAsync(User);
+                if (currentUser == null)
+                {
+                    return Challenge();
+                }
+                var userWithContent = _context.Users.Include(c => c.PurchasedBooks).FirstOrDefault(u => currentUser.Id == u.Id);
+
+                if (userWithContent.PurchasedBooks == null) userWithContent.PurchasedBooks = new List<Book>();
+
+                userWithContent.PurchasedBooks.Add(book);
+
+                if (book.UsersPurchased == null) book.UsersPurchased = new List<AppUser>();
+                book.UsersPurchased.Add(currentUser);
+
+                _context.Update(userWithContent);
+                _context.Update(book);
+
+                await _context.SaveChangesAsync();
             }
 
             //await _context.SaveChangesAsync();
