@@ -30,12 +30,12 @@ namespace Knjizara.Controllers
         {
             if (String.IsNullOrEmpty(searchString))
             {
-            var applicationDbContext = _context.Books.Include(b => b.Author);
+                var applicationDbContext = _context.Books.Include(b => b.Author);
                 return View(await applicationDbContext.ToListAsync());
             }
             else
             {
-                var applicationDbContext = _context.Books.Include(b => b.Author).Where(b=>b.Title.Contains(searchString));
+                var applicationDbContext = _context.Books.Include(b => b.Author).Where(b => b.Title.Contains(searchString));
                 return View(await applicationDbContext.ToListAsync());
 
             }
@@ -108,8 +108,8 @@ namespace Knjizara.Controllers
             if (book != null && currentUser != null)
             {
                 //ADD TRANSACTION TO DATABASE
-             _context.BookUserBuyTransaction.Add(new BookUserBuy { User = currentUser, Book = book ,CreatedAt=DateTime.Now});
-            await _context.SaveChangesAsync();
+                _context.BookUserBuyTransaction.Add(new BookUserBuy { User = currentUser, Book = book, CreatedAt = DateTime.Now });
+                await _context.SaveChangesAsync();
             }
 
             return RedirectToAction(nameof(Index));
@@ -128,7 +128,7 @@ namespace Knjizara.Controllers
             var book = await _context.Books.FindAsync(id);
             if (book != null)
             {
-                
+
             }
 
             //await _context.SaveChangesAsync();
@@ -174,7 +174,7 @@ namespace Knjizara.Controllers
             var book = await _context.Books.FindAsync(id);
             if (book != null)
             {
-                
+
             }
 
             //await _context.SaveChangesAsync();
