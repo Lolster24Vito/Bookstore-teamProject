@@ -8,6 +8,6 @@ namespace JsonParseToDatabase.Constants
 {
     public static class JsonConstants
     {
-        public const string BOOKS = @"..\..\..\..\PRA\Knjizara\BooksJson\PIK.json";
+        public const string BOOKS = @"C:\Users\Leo\source\repos\PRAKnjizara\Knjizara\BooksJson\PiK.json";
     }
 }

@@ -163,7 +163,7 @@ namespace JsonParseToDatabase
                 if (!CheckTitleNameTable("select * from Books where Title ='" + item.Title + "'"))
                 {
 
-                    DbInsert("INSERT INTO Books (Title,AuthorId,Isbn,PriceForBorrowing,PriceForBuying,StockAvailabilty,CoverURL) VALUES (" + "'" + item.Title + "'" + "," + id + "," + "'" + item.Isbn + "'" + "," + priceforborrowing + "," + priceforbuying + "," + stock + "," + "'" + item.Cover + "'" + ")");
+                    DbInsert("INSERT INTO Books (Title,AuthorId,Isbn,PriceForBorrowing,PriceForBuying,StockAvailabilty,CoverURL) VALUES (" + "'" + item.Title + "'" + "," + id + "," + "'" + item.Isbn + "'" + "," + (int)priceforborrowing + "," + (int)priceforbuying + "," + stock + "," + "'" + item.Cover + "'" + ")");
 
                 }
                
