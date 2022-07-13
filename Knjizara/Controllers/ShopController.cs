@@ -35,7 +35,7 @@ namespace Knjizara.Controllers
             }
             else
             {
-                var applicationDbContext = _context.Books.Include(b => b.Author).Where(b => b.Title.Contains(searchString));
+                var applicationDbContext = _context.Books.Include(b => b.Author).Where(b => b.Title.Contains(searchString) || b.Author.Name.Contains(searchString));
                 return View(await applicationDbContext.ToListAsync());
 
             }
