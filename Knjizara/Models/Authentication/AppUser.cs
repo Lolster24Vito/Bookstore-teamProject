@@ -20,11 +20,6 @@ namespace Knjizara.Models.Authentication
         [StringLength(350)]
         public string? Address { get; set; }
 
-        [Display(Name ="Posuđene knjige")]
-        IList<Book>? BorrowedBooks { get; set; }
-
-        [Display(Name = "Kupljene knjige")]
-        IList<Book>? PurchasedBooks { get; set; }
 
 
     }
