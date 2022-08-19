@@ -9,7 +9,8 @@ namespace Knjizara.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-                        migrationBuilder.DropTable(
+            /*
+             migrationBuilder.DropTable(
                 name: "BookUserItem");
 
             migrationBuilder.CreateTable(
@@ -65,17 +66,19 @@ namespace Knjizara.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
+            /*
             migrationBuilder.CreateIndex(
                 name: "IX_BookUserBorrowTransaction_BookId",
                 table: "BookUserBorrowTransaction",
                 column: "BookId");
-
+            */
+            /*
             migrationBuilder.CreateIndex(
                 name: "IX_BookUserBorrowTransaction_UserId",
                 table: "BookUserBorrowTransaction",
                 column: "UserId");
-
+            */
+            /*
             migrationBuilder.CreateIndex(
                 name: "IX_BookUserBuyTransaction_BookId",
                 table: "BookUserBuyTransaction",
@@ -85,13 +88,15 @@ namespace Knjizara.Migrations
                 name: "IX_BookUserBuyTransaction_UserId",
                 table: "BookUserBuyTransaction",
                 column: "UserId");
+            */
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
+           /* migrationBuilder.DropTable(
                 name: "BookUserBorrowTransaction");
-
+           */
+           /*
             migrationBuilder.DropTable(
                 name: "BookUserBuyTransaction");
 
@@ -130,7 +135,7 @@ namespace Knjizara.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_BookUserItem_UserId",
                 table: "BookUserItem",
-                column: "UserId");
+                column: "UserId");*/
         }
     }
 }

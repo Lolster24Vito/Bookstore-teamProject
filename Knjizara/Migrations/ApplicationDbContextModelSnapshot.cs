@@ -153,7 +153,7 @@ namespace Knjizara.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Authors");
+                    b.ToTable("Authors", (string)null);
                 });
 
             modelBuilder.Entity("Knjizara.Models.Books.Book", b =>
@@ -200,7 +200,7 @@ namespace Knjizara.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("Books");
+                    b.ToTable("Books", (string)null);
                 });
 
             modelBuilder.Entity("Knjizara.Models.Transactions.BookUserBorrow", b =>
@@ -232,7 +232,7 @@ namespace Knjizara.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("BookUserBorrowTransaction");
+                    b.ToTable("BookUserBorrowTransaction", (string)null);
                 });
 
             modelBuilder.Entity("Knjizara.Models.Transactions.BookUserBuy", b =>
@@ -258,7 +258,7 @@ namespace Knjizara.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("BookUserBuyTransaction");
+                    b.ToTable("BookUserBuyTransaction", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

@@ -9,7 +9,7 @@ namespace Knjizara.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
+ /* migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -242,10 +242,13 @@ namespace Knjizara.Migrations
                 name: "IX_Books_AuthorId",
                 table: "Books",
                 column: "AuthorId");
+ */
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+           /*
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -272,6 +275,7 @@ namespace Knjizara.Migrations
 
             migrationBuilder.DropTable(
                 name: "Authors");
+           */
         }
     }
 }

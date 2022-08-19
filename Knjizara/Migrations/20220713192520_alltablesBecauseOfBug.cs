@@ -9,7 +9,7 @@ namespace Knjizara.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-           
+           /*
 
             migrationBuilder.CreateTable(
                 name: "BookUserBorrowTransaction",
@@ -38,7 +38,7 @@ namespace Knjizara.Migrations
                         principalTable: "Books",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
+                });*/
 
             migrationBuilder.CreateTable(
                 name: "BookUserBuyTransaction",
@@ -67,7 +67,7 @@ namespace Knjizara.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-
+            /*
             migrationBuilder.CreateIndex(
                 name: "IX_BookUserBorrowTransaction_BookId",
                 table: "BookUserBorrowTransaction",
@@ -77,6 +77,7 @@ namespace Knjizara.Migrations
                 name: "IX_BookUserBorrowTransaction_UserId",
                 table: "BookUserBorrowTransaction",
                 column: "UserId");
+            */
 
             migrationBuilder.CreateIndex(
                 name: "IX_BookUserBuyTransaction_BookId",
@@ -91,9 +92,9 @@ namespace Knjizara.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-           
+           /*
             migrationBuilder.DropTable(
-                name: "BookUserBorrowTransaction");
+                name: "BookUserBorrowTransaction");*/
 
             migrationBuilder.DropTable(
                 name: "BookUserBuyTransaction");
