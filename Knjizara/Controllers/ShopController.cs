@@ -139,7 +139,7 @@ namespace Knjizara.Controllers
         [Authorize]
         public async Task<IActionResult> Borrow(int? id)
         {
-            if (id == null || _context.Books == null)
+            if (id is null || _context.Books is null)
             {
                 return NotFound();
             }
@@ -148,11 +148,11 @@ namespace Knjizara.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
             var currentUser = await _userManager.GetUserAsync(User);
 
-            if (book == null)
+            if (book is null)
             {
                 return NotFound();
             }
-            if (book != null && currentUser != null)
+            if (book is not null && currentUser is not null)
             {
                 //ADD TRANSACTION TO DATABASE
                 _context.BookUserBorrowTransaction.Add(new BookUserBorrow { User = currentUser, Book = book, CreatedAt = DateTime.Now });
@@ -161,7 +161,13 @@ namespace Knjizara.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<IActionResult> Return(int id)
+        {
+            BookUserBorrow? borrowedBook = await _context.BookUserBorrowTransaction.FirstOrDefaultAsync(b => b.Id == id);
+            return Ok();
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
