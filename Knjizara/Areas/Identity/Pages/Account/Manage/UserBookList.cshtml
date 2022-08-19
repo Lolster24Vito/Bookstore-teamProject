@@ -40,7 +40,7 @@
                         @Html.DisplayFor(modelItem => item.CreatedAt)
                     </td>
                     <td>
-                        <a href="@Url.Action("Return", "Shop", new { item.Book.Id })">return book</a>
+                        @Html.ActionLink("return book", "Return", "Shop", new {id = item.Book.Id})
                     </td>
                 </tr>
             }
