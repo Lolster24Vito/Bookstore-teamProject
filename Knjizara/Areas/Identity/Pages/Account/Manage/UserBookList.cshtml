@@ -7,7 +7,7 @@
 
 <h2>Posuđene knjige</h2>
 
-@if (Model.BorrowedBooks.Count > 0)
+@if (Model.BorrowedBooks?.Count > 0)
 {
     <table class="table">
         <thead>
@@ -40,7 +40,7 @@
                         @Html.DisplayFor(modelItem => item.CreatedAt)
                     </td>
                     <td>
-                        @Html.ActionLink("return book", "Return", "Shop", new {id = item.Book.Id})
+                        <a asp-page-handler="ReturnBook" asp-route-id="@item.Book.Id" onclick="return confirm('Are you sure you want to return this book?')">return book</a>
                     </td>
                 </tr>
             }
@@ -54,7 +54,7 @@ else
 
 <h2>Kupljene knjige</h2>
 
-@if (Model.PurchasedBooks.Count > 0)
+@if (Model.PurchasedBooks?.Count > 0)
 {
     <table class="table">
         <thead>

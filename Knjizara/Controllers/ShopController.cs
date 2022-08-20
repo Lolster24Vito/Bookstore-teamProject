@@ -161,18 +161,6 @@ namespace Knjizara.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> Return(int id)
-        {
-            BookUserBorrow? borrowedBook = await _context.BookUserBorrowTransaction.FirstOrDefaultAsync(b => b.Id == id);
-            if (borrowedBook is null)
-            {
-                return NotFound();
-            }
-            _context.BookUserBorrowTransaction.Remove(borrowedBook);
-            await _context.SaveChangesAsync();
-            return Ok();
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Borrow(int id)
