@@ -75,7 +75,7 @@ namespace Knjizara.Controllers
             }
             _context.BookUserBorrowTransaction.Remove(borrowedBook);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Details", new { id = borrowedBook.User.Id });
+            return RedirectToAction(nameof(Details), new { id = borrowedBook.User.Id });
         }
 
         // GET: AppUsers/Create
