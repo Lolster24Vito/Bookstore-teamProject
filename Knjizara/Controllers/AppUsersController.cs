@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Knjizara.Data;
 using Knjizara.Models.Authentication;
+using Knjizara.Models.ViewModels;
+using Knjizara.Models.Transactions;
 
 namespace Knjizara.Controllers
 {
@@ -37,19 +39,26 @@ namespace Knjizara.Controllers
         // GET: AppUsers/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null || _context.Users == null)
+            if (id is null || _context.Users is null)
             {
                 return NotFound();
             }
 
-            var appUser = await _context.Users
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (appUser == null)
+            AppUser? appUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+            ICollection<BookUserBorrow> borrowedBooks = _context.BookUserBorrowTransaction.Where(b => b.User.Id == appUser.Id).ToList();
+
+            if (appUser is null)
             {
                 return NotFound();
             }
 
-            return View(appUser);
+            UserDetailsVM userDetailsVM = new()
+            {
+                User = appUser,
+                Books = borrowedBooks
+            };
+
+            return View(userDetailsVM);
         }
 
         // GET: AppUsers/Create
