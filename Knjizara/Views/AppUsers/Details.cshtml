@@ -1,4 +1,4 @@
-﻿@model Knjizara.Models.Authentication.AppUser
+﻿@model Knjizara.Models.ViewModels.UserDetailsVM
 
 @{
     ViewData["Title"] = "Details";
@@ -11,43 +11,130 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FirstName)
+            @Html.DisplayNameFor(model => model.User.FirstName)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FirstName)
+            @Html.DisplayFor(model => model.User.FirstName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LastName)
+            @Html.DisplayNameFor(model => model.User.LastName)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LastName)
+            @Html.DisplayFor(model => model.User.LastName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Address)
+            @Html.DisplayNameFor(model => model.User.Address)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Address)
+            @Html.DisplayFor(model => model.User.Address)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UserName)
+            @Html.DisplayNameFor(model => model.User.UserName)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UserName)
+            @Html.DisplayFor(model => model.User.UserName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
+            @Html.DisplayNameFor(model => model.User.Email)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
+            @Html.DisplayFor(model => model.User.Email)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PhoneNumber)
+            @Html.DisplayNameFor(model => model.User.PhoneNumber)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PhoneNumber)
+            @Html.DisplayFor(model => model.User.PhoneNumber)
         </dd>
     </dl>
 </div>
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+<h2>Posuđene knjige</h2>
+@if (Model.BorrowedBooks?.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.BorrowedBooks[0].Book.Title)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.BorrowedBooks[0].Book.Author)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BorrowedBooks[0].CreatedAt)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.BorrowedBooks)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Book.Title)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Book.Author.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedAt)
+                    </td>
+                    <td>
+                        <a asp-action="ReturnBook" asp-controller="AppUsers" asp-route-id="@item.Book?.Id" onclick="return confirm('Are you sure you want to return this book?')">return book</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="p-2">Nemate posuđenih knjiga</p>
+}
+<h2>Kupljene knjige</h2>
+@if (Model.PurchasedBooks?.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.PurchasedBooks[0].Book.Title)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.PurchasedBooks[0].Book.Author)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PurchasedBooks[0].CreatedAt)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.PurchasedBooks)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Book.Title)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Book.Author.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedAt)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="p-2">Nemate kupljenih knjiga</p>
+}

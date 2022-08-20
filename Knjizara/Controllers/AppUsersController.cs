@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Knjizara.Data;
 using Knjizara.Models.Authentication;
+using Knjizara.Models.ViewModels;
+using Knjizara.Models.Transactions;
 
 namespace Knjizara.Controllers
 {
@@ -37,19 +39,49 @@ namespace Knjizara.Controllers
         // GET: AppUsers/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null || _context.Users == null)
+            if (id is null || _context.Users is null)
             {
                 return NotFound();
             }
 
-            var appUser = await _context.Users
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (appUser == null)
+            AppUser? appUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+            IList<BookUserBorrow> borrowedBooks = _context.BookUserBorrowTransaction
+                .Include(bu => bu.Book)
+                .Include(bu => bu.Book.Author)
+                .Where(b => b.User.Id == appUser.Id).ToList();
+
+            IList<BookUserBuy> purchasedBooks = _context.BookUserBuyTransaction
+                .Include(bu => bu.Book)
+                .Include(bu => bu.Book.Author)
+                .Where(b => b.User.Id == appUser.Id).ToList();
+
+            if (appUser is null)
             {
                 return NotFound();
             }
 
-            return View(appUser);
+            UserDetailsVM userDetailsVM = new()
+            {
+                User = appUser,
+                BorrowedBooks = borrowedBooks,
+                PurchasedBooks = purchasedBooks
+            };
+
+            return View(userDetailsVM);
+        }
+
+        public async Task<IActionResult> ReturnBookAsync(int id)
+        {
+            BookUserBorrow? borrowedBook = _context.BookUserBorrowTransaction
+                .Include(bu => bu.User)
+                .FirstOrDefault(b => b.Book.Id == id);
+            if (borrowedBook is null)
+            {
+                return NotFound();
+            }
+            _context.BookUserBorrowTransaction.Remove(borrowedBook);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Details), new { id = borrowedBook.User.Id });
         }
 
         // GET: AppUsers/Create
@@ -158,14 +190,14 @@ namespace Knjizara.Controllers
             {
                 _context.Users.Remove(appUser);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool AppUserExists(Guid id)
         {
-          return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

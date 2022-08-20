@@ -10,9 +10,13 @@ using Knjizara.Models.Books;
 using Knjizara.Models.BaseEntities;
 using Knjizara.Models.ViewModels;
 using Newtonsoft.Json;
+using Knjizara.Models.Authentication;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.SqlClient;
 
 namespace Knjizara.Controllers
 {
+    
     public class BooksController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -20,6 +24,7 @@ namespace Knjizara.Controllers
         public BooksController(ApplicationDbContext context)
         {
             _context = context;
+            
         }
 
         //GET: Books
@@ -185,11 +190,14 @@ namespace Knjizara.Controllers
             return View(book);
         }
 
+        
         // POST: Books/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+             
+
             if (_context.Books == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Books'  is null.");
@@ -197,6 +205,17 @@ namespace Knjizara.Controllers
             var book = await _context.Books.FindAsync(id);
             if (book != null)
             {
+
+
+
+                SqlConnection con = new SqlConnection("Server = (localdb)\\MSSQLLocalDB; Database = aspnet-Knjizara-A684A6DA-A4A6-4CD9-93B4-2142EB287C06; Trusted_Connection = True; MultipleActiveResultSets = true");
+                
+                SqlCommand cmd = new SqlCommand("delete_Books", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", book.Id);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
                 _context.Books.Remove(book);
             }
             
