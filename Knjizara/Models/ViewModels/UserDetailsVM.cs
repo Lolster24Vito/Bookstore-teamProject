@@ -7,6 +7,6 @@ namespace Knjizara.Models.ViewModels
     public class UserDetailsVM
     {
         public AppUser? User { get; set; }
-        public ICollection<BookUserBorrow>? Books { get; set; }
+        public IList<BookUserBorrow>? Books { get; set; }
     }
 }

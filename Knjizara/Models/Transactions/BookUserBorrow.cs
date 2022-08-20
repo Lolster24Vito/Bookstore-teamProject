@@ -11,7 +11,6 @@ namespace Knjizara.Models.Transactions
         [Key]
         public int Id { get; set; }
 
-
         public Book Book { get; set; }
         public AppUser User { get; set; }
         public DateTime CreatedAt { get; set; }

@@ -43,17 +43,5 @@ namespace Knjizara.Areas.Identity.Pages.Account
                    .Where(bu => bu.User == currentUser).ToList();
             }
         }
-
-        public async Task OnGetReturnBookAsync(int id)
-        {
-            BookUserBorrow? borrowedBook = _context.BookUserBorrowTransaction.FirstOrDefault(b => b.Book.Id == id);
-            if (borrowedBook is null)
-            {
-                throw new Exception($"There is no borrowed book with id: {id}");
-            }
-            _context.BookUserBorrowTransaction.Remove(borrowedBook);
-            await _context.SaveChangesAsync();
-            await OnGetAsync();
-        }
     }
 }

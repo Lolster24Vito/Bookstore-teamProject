@@ -39,9 +39,6 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.CreatedAt)
                     </td>
-                    <td>
-                        <a asp-page-handler="ReturnBook" asp-route-id="@item.Book.Id" onclick="return confirm('Are you sure you want to return this book?')">return book</a>
-                    </td>
                 </tr>
             }
         </tbody>

@@ -45,7 +45,10 @@ namespace Knjizara.Controllers
             }
 
             AppUser? appUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
-            ICollection<BookUserBorrow> borrowedBooks = _context.BookUserBorrowTransaction.Where(b => b.User.Id == appUser.Id).ToList();
+            IList<BookUserBorrow> borrowedBooks = _context.BookUserBorrowTransaction
+                .Include(bu => bu.Book)
+                .Include(bu => bu.Book.Author)
+                .Where(b => b.User.Id == appUser.Id).ToList();
 
             if (appUser is null)
             {
@@ -59,6 +62,20 @@ namespace Knjizara.Controllers
             };
 
             return View(userDetailsVM);
+        }
+
+        public async Task<IActionResult> ReturnBookAsync(int id)
+        {
+            BookUserBorrow? borrowedBook = _context.BookUserBorrowTransaction
+                .Include(bu => bu.User)
+                .FirstOrDefault(b => b.Book.Id == id);
+            if (borrowedBook is null)
+            {
+                return NotFound();
+            }
+            _context.BookUserBorrowTransaction.Remove(borrowedBook);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Details", new { id = borrowedBook.User.Id });
         }
 
         // GET: AppUsers/Create
@@ -167,14 +184,14 @@ namespace Knjizara.Controllers
             {
                 _context.Users.Remove(appUser);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool AppUserExists(Guid id)
         {
-          return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
