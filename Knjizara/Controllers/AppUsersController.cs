@@ -50,6 +50,11 @@ namespace Knjizara.Controllers
                 .Include(bu => bu.Book.Author)
                 .Where(b => b.User.Id == appUser.Id).ToList();
 
+            IList<BookUserBuy> purchasedBooks = _context.BookUserBuyTransaction
+                .Include(bu => bu.Book)
+                .Include(bu => bu.Book.Author)
+                .Where(b => b.User.Id == appUser.Id).ToList();
+
             if (appUser is null)
             {
                 return NotFound();
@@ -58,7 +63,8 @@ namespace Knjizara.Controllers
             UserDetailsVM userDetailsVM = new()
             {
                 User = appUser,
-                Books = borrowedBooks
+                BorrowedBooks = borrowedBooks,
+                PurchasedBooks = purchasedBooks
             };
 
             return View(userDetailsVM);

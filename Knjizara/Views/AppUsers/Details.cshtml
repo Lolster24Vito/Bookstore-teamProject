@@ -51,26 +51,27 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-@if (Model.Books?.Count > 0)
+<h2>Posuđene knjige</h2>
+@if (Model.BorrowedBooks?.Count > 0)
 {
     <table class="table">
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Books[0].Book.Title)
+                    @Html.DisplayNameFor(model => model.BorrowedBooks[0].Book.Title)
                 </th>
 
                 <th>
-                    @Html.DisplayNameFor(model => model.Books[0].Book.Author)
+                    @Html.DisplayNameFor(model => model.BorrowedBooks[0].Book.Author)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Books[0].CreatedAt)
+                    @Html.DisplayNameFor(model => model.BorrowedBooks[0].CreatedAt)
                 </th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.Books)
+            @foreach (var item in Model.BorrowedBooks)
             {
                 <tr>
                     <td>
@@ -94,4 +95,46 @@
 else
 {
     <p class="p-2">Nemate posuđenih knjiga</p>
+}
+<h2>Kupljene knjige</h2>
+@if (Model.PurchasedBooks?.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.PurchasedBooks[0].Book.Title)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.PurchasedBooks[0].Book.Author)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PurchasedBooks[0].CreatedAt)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.PurchasedBooks)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Book.Title)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Book.Author.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedAt)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="p-2">Nemate kupljenih knjiga</p>
 }
