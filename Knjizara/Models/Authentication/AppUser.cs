@@ -20,7 +20,7 @@ namespace Knjizara.Models.Authentication
         [StringLength(350)]
         public string? Address { get; set; }
 
-
+        public bool isDeleted { get; set; }
 
     }
 }
