@@ -31,10 +31,10 @@ namespace Knjizara.Data
                 WithMany(a=>a.Books).HasForeignKey(b=>b.AuthorId);
 
 
-            base.OnModelCreating(modelBuilder);
-
             modelBuilder.Entity<AppUser>().Property<bool>("isDeleted");
             modelBuilder.Entity<AppUser>().HasQueryFilter(u => EF.Property<bool>(u, "isDeleted") == false);
+
+            base.OnModelCreating(modelBuilder);
 
         }
 
@@ -52,7 +52,7 @@ namespace Knjizara.Data
 
         private void UpdateSoftDeleteStatus()
         {
-            foreach (var entry in ChangeTracker.Entries())
+            foreach (var entry in ChangeTracker.Entries<AppUser>())
             {
                 switch(entry.State)
                 {
