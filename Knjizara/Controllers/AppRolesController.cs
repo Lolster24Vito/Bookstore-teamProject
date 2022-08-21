@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Knjizara.Data;
 using Knjizara.Models.Authentication;
 using Microsoft.AspNetCore.Identity;
+using Knjizara.Models.ViewModels;
 
 namespace Knjizara.Controllers
 {
@@ -15,11 +16,14 @@ namespace Knjizara.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly RoleManager<AppRole> _roleManager;
+        private readonly UserManager<AppUser> _userManager;
 
-        public AppRolesController(ApplicationDbContext context, RoleManager<AppRole> roleManager)
+
+        public AppRolesController(ApplicationDbContext context, RoleManager<AppRole> roleManager,UserManager<AppUser> userManager)
         {
             _context = context;
             _roleManager = roleManager;
+            _userManager = userManager; 
         }
 
         // GET: AppRoles
@@ -53,6 +57,7 @@ namespace Knjizara.Controllers
         {
             return View();
         }
+
 
         // POST: AppRoles/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -163,6 +168,46 @@ namespace Knjizara.Controllers
         private bool AppRoleExists(Guid id)
         {
           return (_context.Roles?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        public async Task<IActionResult> AddAdmin(Guid? id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+
+            await _userManager.AddToRoleAsync(user, "Admin");
+
+            return RedirectToAction(nameof(UsersRolesEdit));
+
+
+        }
+        public async Task<IActionResult> RemoveAdmin(Guid? id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+
+            await _userManager.RemoveFromRoleAsync(user, "Admin");
+
+            return RedirectToAction(nameof(UsersRolesEdit));
+
+
+        }
+        public async Task<IActionResult> UsersRolesEdit()
+        {
+            var users = await _userManager.Users.ToListAsync();
+            var userRolesViewModel = new List<RolesUsersViewModel>();
+            foreach (AppUser user in users)
+            {
+                var thisViewModel = new RolesUsersViewModel();
+                thisViewModel.Email = user.Email;
+                thisViewModel.UserId = user.Id;
+
+                thisViewModel.Roles = await GetUserRoles(user);
+                userRolesViewModel.Add(thisViewModel);
+            }
+            return View(userRolesViewModel);
+        }
+        private async Task<List<string>> GetUserRoles(AppUser user)
+        {
+            return new List<string>(await _userManager.GetRolesAsync(user));
         }
     }
 }

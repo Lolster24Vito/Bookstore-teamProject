@@ -9,16 +9,21 @@ using Knjizara.Data;
 using Knjizara.Models.Authentication;
 using Knjizara.Models.ViewModels;
 using Knjizara.Models.Transactions;
+using Microsoft.AspNetCore.Identity;
 
 namespace Knjizara.Controllers
 {
     public class AppUsersController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly RoleManager<AppRole> _roleManager;
 
-        public AppUsersController(ApplicationDbContext context)
+
+        public AppUsersController(ApplicationDbContext context, RoleManager<AppRole> roleManager)
         {
             _context = context;
+            _roleManager = roleManager;
+
         }
 
         // GET: AppUsers

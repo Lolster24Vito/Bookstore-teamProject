@@ -1,0 +1,52 @@
+﻿
+@model IEnumerable<Knjizara.Models.ViewModels.RolesUsersViewModel>
+
+@{
+    ViewData["Title"] = "UsersRolesEdit";
+}
+
+<h1>Add admins</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Roles)
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+@foreach (var item in Model) {
+        <tr>
+
+            <td>
+            @Html.DisplayFor(modelItem => item.Email)
+            </td>
+        <td>@string.Join(" , ", item.Roles)</td>
+        <td>
+                    @if (item.Roles.Count == 0)
+                    {
+                    <a asp-action="AddAdmin" asp-route-id="@item.UserId">Add as admin</a>
+                    }
+        </td>
+        <td>
+                    @if (item.Roles.Count != 0&&item.Email!="Admin@gmail.com")
+                    {
+        <a asp-action="RemoveAdmin" asp-route-id="@item.UserId">Remove admin</a>
+                        
+                    }
+                </td>
+        </tr>
+}
+
+    </tbody>
+</table>
+

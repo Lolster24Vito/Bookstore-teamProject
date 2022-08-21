@@ -21,7 +21,7 @@ namespace Knjizara.Controllers
         }
 
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public IActionResult Privacy()
         {
             return View();
