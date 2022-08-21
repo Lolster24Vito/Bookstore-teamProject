@@ -36,7 +36,7 @@ namespace Knjizara.Areas.Identity.Pages.Account
                 BorrowedBooks = _context.BookUserBorrowTransaction
                    .Include(bu => bu.Book)
                    .Include(bu => bu.Book.Author)
-                   .Where(bu => bu.User == currentUser).ToList();
+                   .Where(bu => bu.User == currentUser&&bu.IsReturned==false).ToList();
                 PurchasedBooks = _context.BookUserBuyTransaction
                    .Include(bu => bu.Book)
                    .Include(bu => bu.Book.Author)
