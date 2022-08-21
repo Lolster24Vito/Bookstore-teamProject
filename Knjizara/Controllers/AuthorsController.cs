@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Knjizara.Data;
 using Knjizara.Models.BaseEntities;
 using Knjizara.Models.Books;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Knjizara.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AuthorsController : Controller
     {
         private readonly ApplicationDbContext _context;

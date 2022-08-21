@@ -10,9 +10,11 @@ using Knjizara.Models.Authentication;
 using Knjizara.Models.ViewModels;
 using Knjizara.Models.Transactions;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Knjizara.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AppUsersController : Controller
     {
         private readonly ApplicationDbContext _context;

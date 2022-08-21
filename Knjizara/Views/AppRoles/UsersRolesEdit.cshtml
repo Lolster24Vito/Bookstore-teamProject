@@ -7,6 +7,13 @@
 
 <h1>Add admins</h1>
 
+@using (Html.BeginForm())
+{
+    <p>
+        Search: @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
+}
 
 <table class="table">
     <thead>

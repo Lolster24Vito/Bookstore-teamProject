@@ -9,9 +9,11 @@ using Knjizara.Data;
 using Knjizara.Models.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Knjizara.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Knjizara.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AppRolesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -190,9 +192,20 @@ namespace Knjizara.Controllers
 
 
         }
-        public async Task<IActionResult> UsersRolesEdit()
+        public async Task<IActionResult> UsersRolesEdit(string? searchString)
         {
-            var users = await _userManager.Users.ToListAsync();
+            List<AppUser> users = new List<AppUser>();
+
+            if (String.IsNullOrWhiteSpace(searchString))
+            {
+                users = await _userManager.Users.ToListAsync();
+            }
+            else
+            {
+                //users = _context.Users.Where(u => u.FirstName.Contains(searchString) || u.LastName.Contains(searchString)
+                users = await _userManager.Users.Where(u=>u.Email.Contains(searchString)).ToListAsync();
+            }
+
             var userRolesViewModel = new List<RolesUsersViewModel>();
             foreach (AppUser user in users)
             {
