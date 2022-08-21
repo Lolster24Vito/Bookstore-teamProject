@@ -55,7 +55,7 @@ namespace Knjizara.Controllers
             IList<BookUserBorrow> borrowedBooks = _context.BookUserBorrowTransaction
                 .Include(bu => bu.Book)
                 .Include(bu => bu.Book.Author)
-                .Where(b => b.User.Id == appUser.Id).ToList();
+                .Where(b => b.User.Id == appUser.Id && (b.IsReturned == false)).ToList();
 
             IList<BookUserBuy> purchasedBooks = _context.BookUserBuyTransaction
                 .Include(bu => bu.Book)
@@ -81,12 +81,14 @@ namespace Knjizara.Controllers
         {
             BookUserBorrow? borrowedBook = _context.BookUserBorrowTransaction
                 .Include(bu => bu.User)
-                .FirstOrDefault(b => b.Book.Id == id);
+                .FirstOrDefault(b => b.Book.Id == id&&(b.IsReturned==false));
             if (borrowedBook is null)
             {
                 return NotFound();
             }
-            _context.BookUserBorrowTransaction.Remove(borrowedBook);
+            borrowedBook.IsReturned = true;
+            _context.BookUserBorrowTransaction.Update(borrowedBook);
+            _context.UserReturnBorrowedBookTransaction.Add(new UserReturnBorrowedBook { Borrow=borrowedBook,ReturnedDate=DateTime.Now});
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Details), new { id = borrowedBook.User.Id });
         }

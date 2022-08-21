@@ -22,6 +22,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.BorrowedBooks[0].CreatedAt)
                 </th>
+                 <th>
+                    @Html.DisplayNameFor(model => model.BorrowedBooks[0].ReturnOnDate)
+                </th>
                 <th></th>
             </tr>
         </thead>
@@ -38,6 +41,10 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.CreatedAt)
+                    </td>
+                    <td>
+                   @Html.DisplayFor(modelItem => item.ReturnOnDate)
+
                     </td>
                 </tr>
             }

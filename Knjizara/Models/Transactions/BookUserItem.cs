@@ -13,6 +13,7 @@ namespace Knjizara.Models.Transactions
         
         public Book Book { get; set; }
         public AppUser User { get; set; }
+        [Display(Name = "Kupljeno datuma:")]
         public DateTime CreatedAt { get; set; }
     }
 }
