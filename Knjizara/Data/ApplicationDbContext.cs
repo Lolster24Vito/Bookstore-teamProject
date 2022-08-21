@@ -33,6 +33,38 @@ namespace Knjizara.Data
 
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<AppUser>().Property<bool>("isDeleted");
+            modelBuilder.Entity<AppUser>().HasQueryFilter(u => EF.Property<bool>(u, "isDeleted") == false);
+
+        }
+
+        public override int SaveChanges()
+        {
+            UpdateSoftDeleteStatus();
+            return base.SaveChanges();
+        }
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+        {
+            UpdateSoftDeleteStatus();
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
+
+        private void UpdateSoftDeleteStatus()
+        {
+            foreach (var entry in ChangeTracker.Entries())
+            {
+                switch(entry.State)
+                {
+                    case EntityState.Added:
+                        entry.CurrentValues["isDeleted"] = false;
+                        break;
+                    case EntityState.Deleted:
+                        entry.State = EntityState.Modified;
+                        entry.CurrentValues["isDeleted"] = true;
+                        break;
+                }
+            }
         }
     }
 }
