@@ -11,6 +11,7 @@ using Knjizara.Models.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Knjizara.Models.Transactions;
+using Knjizara.Models.ViewModels;
 
 namespace Knjizara.Controllers
 {
@@ -91,6 +92,25 @@ namespace Knjizara.Controllers
         [Authorize]
         public async Task<IActionResult> Buy(int? id)
         {
+
+            var book = await _context.Books.FindAsync(id);
+
+            if (book != null)
+            {
+            return View(book);
+
+            }
+  return RedirectToAction(nameof(Index));
+            
+
+            //await _context.SaveChangesAsync();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<IActionResult> Buy(int id)
+        {
             if (id == null || _context.Books == null)
             {
                 return NotFound();
@@ -116,30 +136,27 @@ namespace Knjizara.Controllers
 
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize]
-        public async Task<IActionResult> Buy(int id)
-        {
-            if (_context.Books == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Books'  is null.");
-            }
-            var book = await _context.Books.FindAsync(id);
-            if (book != null)
-            {
-
-            }
-
-            //await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
 
         [Authorize]
         public async Task<IActionResult> Borrow(int? id)
         {
-            if (id is null || _context.Books is null)
+
+            var book = await _context.Books.FindAsync(id);
+
+            if (book != null)
+            {
+                return View(new BookBorrowVM { Book=book});
+
+            }
+            return RedirectToAction(nameof(Index));
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Borrow(int id,int weeks)
+        {
+            if (_context.Books is null)
             {
                 return NotFound();
             }
@@ -155,28 +172,12 @@ namespace Knjizara.Controllers
             if (book is not null && currentUser is not null)
             {
                 //ADD TRANSACTION TO DATABASE
-                _context.BookUserBorrowTransaction.Add(new BookUserBorrow { User = currentUser, Book = book, CreatedAt = DateTime.Now });
+                _context.BookUserBorrowTransaction.Add(new BookUserBorrow { User = currentUser, Book = book, CreatedAt = DateTime.Now ,ReturnOnDate=DateTime.Now.AddDays(weeks*7),IsReturned=false});
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));
-        }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Borrow(int id)
-        {
-            if (_context.Books == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Books'  is null.");
-            }
-            var book = await _context.Books.FindAsync(id);
-            if (book != null)
-            {
 
-            }
-
-            //await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
 

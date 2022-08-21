@@ -18,6 +18,7 @@ namespace Knjizara.Data
         public DbSet<Author> Authors { get; set; }
         public DbSet<BookUserBorrow> BookUserBorrowTransaction { get; set; }
         public DbSet<BookUserBuy> BookUserBuyTransaction { get; set; }
+        public DbSet<UserReturnBorrowedBook> UserReturnBorrowedBookTransaction { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

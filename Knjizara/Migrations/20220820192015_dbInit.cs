@@ -10,7 +10,7 @@ namespace Knjizara.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
            
-
+            /*
             migrationBuilder.CreateTable(
                 name: "BookUserBorrowTransaction",
                 columns: table => new
@@ -87,17 +87,18 @@ namespace Knjizara.Migrations
                 name: "IX_BookUserBuyTransaction_UserId",
                 table: "BookUserBuyTransaction",
                 column: "UserId");
+            */
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-           
+           /*
             migrationBuilder.DropTable(
                 name: "BookUserBorrowTransaction");
 
             migrationBuilder.DropTable(
                 name: "BookUserBuyTransaction");
-
+           */
           
         }
     }

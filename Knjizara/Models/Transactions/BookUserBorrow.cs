@@ -13,9 +13,12 @@ namespace Knjizara.Models.Transactions
 
         public Book Book { get; set; }
         public AppUser User { get; set; }
+        [Display(Name = "Posuđeno datuma:")]
         public DateTime CreatedAt { get; set; }
+        [Display(Name = "Treba vratiti datuma:")]
+
+        public DateTime? ReturnOnDate { get; set; }
 
         public bool IsReturned { get; set; }
-        public DateTime? ReturnedDate { get; set; }
     }
 }

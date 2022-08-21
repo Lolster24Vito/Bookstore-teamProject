@@ -4,6 +4,7 @@ using Knjizara.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Knjizara.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220821094309_AddedBookBorrowReturnOnDate")]
+    partial class AddedBookBorrowReturnOnDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -223,6 +225,9 @@ namespace Knjizara.Migrations
                     b.Property<DateTime?>("ReturnOnDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("ReturnedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
@@ -259,27 +264,6 @@ namespace Knjizara.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("BookUserBuyTransaction");
-                });
-
-            modelBuilder.Entity("Knjizara.Models.Transactions.UserReturnBorrowedBook", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("BorrowId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ReturnedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BorrowId");
-
-                    b.ToTable("UserReturnBorrowedBookTransaction");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -432,17 +416,6 @@ namespace Knjizara.Migrations
                     b.Navigation("Book");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Knjizara.Models.Transactions.UserReturnBorrowedBook", b =>
-                {
-                    b.HasOne("Knjizara.Models.Transactions.BookUserBorrow", "Borrow")
-                        .WithMany()
-                        .HasForeignKey("BorrowId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Borrow");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
