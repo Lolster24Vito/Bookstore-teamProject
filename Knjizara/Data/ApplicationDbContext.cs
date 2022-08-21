@@ -28,6 +28,8 @@ namespace Knjizara.Data
 
             modelBuilder.Entity<Book>().HasOne(e => e.Author).
                 WithMany(a=>a.Books).HasForeignKey(b=>b.AuthorId);
+
+
             base.OnModelCreating(modelBuilder);
 
         }

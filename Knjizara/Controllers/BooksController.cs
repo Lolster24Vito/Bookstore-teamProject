@@ -13,10 +13,12 @@ using Newtonsoft.Json;
 using Knjizara.Models.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Knjizara.Controllers
 {
-    
+    [Authorize(Roles = "Admin")]
+
     public class BooksController : Controller
     {
         private readonly ApplicationDbContext _context;
