@@ -100,7 +100,7 @@ namespace Knjizara.Controllers
             return View(book);
 
             }
-  return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index));
             
 
             //await _context.SaveChangesAsync();
@@ -142,15 +142,17 @@ namespace Knjizara.Controllers
         {
 
             var book = await _context.Books.FindAsync(id);
-
-            if (book != null)
+            var currentUser = await _userManager.GetUserAsync(User);
+            
+            if (book != null && book.StockAvailabilty > 0 && CheckUserBorrows(currentUser))
             {
                 return View(new BookBorrowVM { Book=book});
-
             }
+            //obavijest da ih nema na zalihi/više od 3 posuđene
             return RedirectToAction(nameof(Index));
 
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -165,6 +167,8 @@ namespace Knjizara.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
             var currentUser = await _userManager.GetUserAsync(User);
 
+            
+
             if (book is null)
             {
                 return NotFound();
@@ -172,14 +176,27 @@ namespace Knjizara.Controllers
             if (book is not null && currentUser is not null)
             {
                 //ADD TRANSACTION TO DATABASE
-                _context.BookUserBorrowTransaction.Add(new BookUserBorrow { User = currentUser, Book = book, CreatedAt = DateTime.Now ,ReturnOnDate=DateTime.Now.AddDays(weeks*7),IsReturned=false});
+                _context.BookUserBorrowTransaction.Add(new BookUserBorrow { User = currentUser, Book = book, CreatedAt = DateTime.Now, ReturnOnDate = DateTime.Now.AddDays(weeks * 7), IsReturned = false });
                 await _context.SaveChangesAsync();
             }
+            //Obavijest da korisnik ima 3 posuđene knjige
             return RedirectToAction(nameof(Index));
 
 
         }
 
-
+        private bool CheckUserBorrows(AppUser currentUser)
+        {
+            List<BookUserBorrow> bookUserBorrowsCount = new List<BookUserBorrow>();
+            bookUserBorrowsCount = _context.BookUserBorrowTransaction.Where(x => x.User.Id == currentUser.Id && x.IsReturned == false).ToList();
+            if (bookUserBorrowsCount.Count < 3)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
