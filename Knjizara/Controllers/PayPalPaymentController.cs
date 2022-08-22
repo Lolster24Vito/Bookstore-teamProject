@@ -1,18 +1,32 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Knjizara.Data;
+using Knjizara.Models.Books;
+using Microsoft.AspNetCore.Mvc;
 using PayPal.Api;
+using System.Linq;
+using System.Web.Http;
+using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 
 namespace Knjizara.Controllers
 {
     public class PayPalPaymentController : Controller
     {
+        private readonly ApplicationDbContext _context;
+
+        public PayPalPaymentController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult PaymentWithPaypal()
+        [HttpGet]
+        public ActionResult PaymentWithPaypal(int id)
         {
             APIContext apiContext = Models.PayPal.Configuration.GetAPIContext();
+            Book? book = _context.Books.FirstOrDefault(b => b.Id == id);
             try
             {
                 string payerId = Request.Query["PayerID"];
@@ -23,7 +37,7 @@ namespace Knjizara.Controllers
 
                     var guid = Convert.ToString((new Random()).Next(100000));
 
-                    var createdPayment = this.CreatePayment(apiContext, baseURI + "guid=" + guid);
+                    var createdPayment = this.CreatePayment(apiContext, baseURI + "guid=" + guid, book ?? new Book());
 
                     var links = createdPayment.links.GetEnumerator();
 
@@ -67,15 +81,15 @@ namespace Knjizara.Controllers
             return this.payment.Execute(apiContext, paymentExecution);
         }
 
-        private Payment CreatePayment(APIContext apiContext, string redirectUrl)
+        private Payment CreatePayment(APIContext apiContext, string redirectUrl, Book book)
         {
             var itemList = new ItemList() { items = new List<Item>() };
 
             itemList.items.Add(new Item()
             {
-                name = "Item Name",
+                name = book.Title,
                 currency = "EUR",
-                price = "5",
+                price = book.PriceForBuying.ToString("0.##"),
                 quantity = "1",
                 sku = "sku"
             });
@@ -88,26 +102,18 @@ namespace Knjizara.Controllers
                 return_url = redirectUrl
             };
 
-            var details = new Details()
-            {
-                tax = "1",
-                shipping = "1",
-                subtotal = "5"
-            };
-
             var amount = new Amount()
             {
                 currency = "EUR",
-                total = "7",
-                details = details
+                total = itemList.items[0].price
             };
 
             var transactionList = new List<Transaction>();
 
             transactionList.Add(new Transaction()
             {
-                description = "Transaction description.",
-                invoice_number = "your invoice number",
+                description = $"Transaction description:",
+                invoice_number = "invoice number",
                 amount = amount,
                 item_list = itemList
             });
