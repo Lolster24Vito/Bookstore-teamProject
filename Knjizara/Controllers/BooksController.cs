@@ -30,12 +30,34 @@ namespace Knjizara.Controllers
         }
 
         //GET: Books
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? searchString)
         {
 
-            return (_context.Books != null ?
-                        View(await _context.Books.Include(x => x.Author).ToListAsync()) :
-                        Problem("Entity set 'ApplicationDbContext.Books'  is null."));
+            if (String.IsNullOrEmpty(searchString))
+            {
+                var applicationDbContext = _context.Books.Include(b => b.Author);
+                return View(await applicationDbContext.ToListAsync());
+            }
+            else
+            {
+                var applicationDbContext = _context.Books.Include(b => b.Author).Where(b => b.Title.Contains(searchString) || b.Author.Name.Contains(searchString));
+                return View(await applicationDbContext.ToListAsync());
+            }
+        }
+        //GET: Deleted Books
+        public async Task<IActionResult> DeletedBooks(string? searchString)
+        {
+            
+            if (String.IsNullOrEmpty(searchString))
+            {
+                var deletedBooks = _context.Books.FromSqlRaw("SELECT * FROM DeletedBooks");
+                return View(await deletedBooks.ToListAsync());
+            }
+            else
+            {
+                var deletedBooks = _context.Books.FromSqlRaw("SELECT * FROM DeletedBooks").Include(b => b.Author).Where(b => b.Title.Contains(searchString) || b.Author.Name.Contains(searchString));
+                return View(await deletedBooks.ToListAsync());
+            }
         }
 
 
