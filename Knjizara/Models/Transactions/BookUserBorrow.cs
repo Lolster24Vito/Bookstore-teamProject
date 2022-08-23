@@ -19,6 +19,8 @@ namespace Knjizara.Models.Transactions
 
         public DateTime? ReturnOnDate { get; set; }
 
+        public TimeSpan? DateDifference { get => (ReturnOnDate - DateTime.Now); }
+
         public bool IsReturned { get; set; }
     }
 }

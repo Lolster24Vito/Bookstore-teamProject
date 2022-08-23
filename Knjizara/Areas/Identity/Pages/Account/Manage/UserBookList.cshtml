@@ -5,7 +5,11 @@
     ViewData["Title"] = "UserBookList";
 }
 
-<h2>Posuđene knjige</h2>
+<div class="d-flex justify-content-between">
+    <h2>Posuđene knjige</h2>
+    <button class="btn btn-warning" onclick="location.href='@Url.Action("PayLateFee", "PayPalPayment", new { id = Model.CurrentUser.Id })'">Plati @Model.CurrentUser.LateFee<span>€</span> zakasnine</button>
+</div>
+
 
 @if (Model.BorrowedBooks?.Count > 0)
 {
@@ -22,8 +26,11 @@
                 <th>
                     @Html.DisplayNameFor(model => model.BorrowedBooks[0].CreatedAt)
                 </th>
-                 <th>
+                <th>
                     @Html.DisplayNameFor(model => model.BorrowedBooks[0].ReturnOnDate)
+                </th>
+                <th>
+                    Vracanje za
                 </th>
                 <th></th>
             </tr>
@@ -43,8 +50,14 @@
                         @Html.DisplayFor(modelItem => item.CreatedAt)
                     </td>
                     <td>
-                   @Html.DisplayFor(modelItem => item.ReturnOnDate)
-
+                        @Html.DisplayFor(modelItem => item.ReturnOnDate)
+                    </td>
+                    <td>
+                        @if (item.DateDifference.HasValue)
+                        {
+                            @Html.DisplayFor(modelItem => item.DateDifference.Value.Days)
+                            <span> dana</span>
+                        }
                     </td>
                 </tr>
             }
