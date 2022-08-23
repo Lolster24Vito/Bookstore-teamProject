@@ -144,15 +144,16 @@ namespace Knjizara.Controllers
             var book = await _context.Books.FindAsync(id);
             var currentUser = await _userManager.GetUserAsync(User);
             
-            if (book != null && book.StockAvailabilty > 0 && CheckUserBorrows(currentUser))
+            if (book != null && book.StockAvailabilty > 0 && CheckUserBorrows(currentUser) && ChekUserFee(currentUser))
             {
                 return View(new BookBorrowVM { Book=book});
             }
-            //obavijest da ih nema na zalihi/više od 3 posuđene
+            //obavijest da ih nema na zalihi/više od 3 posuđene/prikaz duga
             return RedirectToAction(nameof(Index));
 
         }
 
+       
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -198,5 +199,6 @@ namespace Knjizara.Controllers
                 return false;
             }
         }
+        private bool ChekUserFee(AppUser currentUser) => currentUser.FeePayed < currentUser.LateFee ? false : true;
     }
 }
