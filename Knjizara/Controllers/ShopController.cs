@@ -19,6 +19,7 @@ namespace Knjizara.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<AppUser> _userManager;
+
         public ShopController(ApplicationDbContext context, UserManager<AppUser> userManager)
         {
             _context = context;
