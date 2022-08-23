@@ -22,5 +22,12 @@ namespace Knjizara.Models.Authentication
 
         public bool isDeleted { get; set; }
 
+        public int DaysLate { get; set; }
+
+        public int LateFee { get; set; }
+
+        public int FeePayed { get; set; }
+
+        public void CalculateLateFee() => LateFee = DaysLate * 1;
     }
 }

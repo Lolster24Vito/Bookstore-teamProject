@@ -88,7 +88,10 @@ namespace Knjizara.Controllers
             }
             borrowedBook.IsReturned = true;
             _context.BookUserBorrowTransaction.Update(borrowedBook);
-            _context.UserReturnBorrowedBookTransaction.Add(new UserReturnBorrowedBook { Borrow=borrowedBook,ReturnedDate=DateTime.Now});
+            var returnedBook = new UserReturnBorrowedBook { Borrow = borrowedBook, ReturnedDate = DateTime.Now };
+            returnedBook.CalculateDaysLate();
+            _context.UserReturnBorrowedBookTransaction.Add(returnedBook);
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Details), new { id = borrowedBook.User.Id });
         }
