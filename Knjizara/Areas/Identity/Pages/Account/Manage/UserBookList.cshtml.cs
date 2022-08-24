@@ -26,21 +26,22 @@ namespace Knjizara.Areas.Identity.Pages.Account
 
         public IList<BookUserBorrow> BorrowedBooks { get; set; } = default!;
         public IList<BookUserBuy> PurchasedBooks { get; set; } = default!;
+        public AppUser CurrentUser { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
             if (_context.Books != null)
             {
-                var currentUser = await _userManager.GetUserAsync(User);
+                CurrentUser = await _userManager.GetUserAsync(User);
 
                 BorrowedBooks = _context.BookUserBorrowTransaction
                    .Include(bu => bu.Book)
                    .Include(bu => bu.Book.Author)
-                   .Where(bu => bu.User == currentUser&&bu.IsReturned==false).ToList();
+                   .Where(bu => bu.User == CurrentUser&&bu.IsReturned==false).ToList();
                 PurchasedBooks = _context.BookUserBuyTransaction
                    .Include(bu => bu.Book)
                    .Include(bu => bu.Book.Author)
-                   .Where(bu => bu.User == currentUser).ToList();
+                   .Where(bu => bu.User == CurrentUser).ToList();
             }
         }
     }

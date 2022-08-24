@@ -1,4 +1,5 @@
 ﻿using Knjizara.Data;
+using Knjizara.Models.Authentication;
 using Knjizara.Models.Books;
 using Microsoft.AspNetCore.Mvc;
 using PayPal.Api;
@@ -8,25 +9,22 @@ using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 
 namespace Knjizara.Controllers
 {
-    public class PayPalPaymentController : Controller
+    public class PayPalController : Controller
     {
-        private readonly ApplicationDbContext _context;
-
-        public PayPalPaymentController(ApplicationDbContext context)
-        {
-            _context = context;
-        }
-
         public ActionResult Index()
         {
             return View();
         }
 
+        public ActionResult PaymentWithPaypal(Guid guid)
+        {
+            return View("Cancellation");
+        }
+
         [HttpGet]
-        public ActionResult PaymentWithPaypal(int id)
+        public ActionResult StartPayment(string name, decimal price)
         {
             APIContext apiContext = Models.PayPal.Configuration.GetAPIContext();
-            Book? book = _context.Books.FirstOrDefault(b => b.Id == id);
             try
             {
                 string payerId = Request.Query["PayerID"];
@@ -35,11 +33,11 @@ namespace Knjizara.Controllers
                     string baseURI = Request.Scheme + "://" + Request.Host +
                                 "/Paypal/PaymentWithPayPal?";
 
-                    var guid = Convert.ToString((new Random()).Next(100000));
+                    string guid = Convert.ToString((new Random()).Next(100000));
 
-                    var createdPayment = this.CreatePayment(apiContext, baseURI + "guid=" + guid, book ?? new Book());
-
-                    var links = createdPayment.links.GetEnumerator();
+                    Payment createdPayment = this.CreatePayment(apiContext, baseURI + "guid=" + guid, name, price.ToString("0.##"));
+                    
+                    List<Links>.Enumerator links = createdPayment.links.GetEnumerator();
 
                     string paypalRedirectUrl = string.Empty;
 
@@ -81,15 +79,15 @@ namespace Knjizara.Controllers
             return this.payment.Execute(apiContext, paymentExecution);
         }
 
-        private Payment CreatePayment(APIContext apiContext, string redirectUrl, Book book)
+        private Payment CreatePayment(APIContext apiContext, string redirectUrl, string name, string price)
         {
             var itemList = new ItemList() { items = new List<Item>() };
 
             itemList.items.Add(new Item()
             {
-                name = book.Title,
+                name = name,
                 currency = "EUR",
-                price = book.PriceForBuying.ToString("0.##"),
+                price = price,
                 quantity = "1",
                 sku = "sku"
             });

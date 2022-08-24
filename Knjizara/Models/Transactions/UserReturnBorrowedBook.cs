@@ -1,6 +1,4 @@
-﻿using Knjizara.Models.Authentication;
-using Knjizara.Models.Books;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 namespace Knjizara.Models.Transactions
 {
     public class UserReturnBorrowedBook
