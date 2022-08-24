@@ -7,7 +7,7 @@
 
 <div class="d-flex justify-content-between">
     <h2>Posuđene knjige</h2>
-    <button class="btn btn-warning" onclick="location.href='@Url.Action("PayLateFee", "PayPalPayment", new { id = Model.CurrentUser.Id })'">Plati @Model.CurrentUser.LateFee<span>€</span> zakasnine</button>
+    <button class="btn btn-warning" onclick="location.href='@Url.Action("StartPayment", "PayPal", new { name = Model.CurrentUser.UserName, price = Model.CurrentUser.LateFee })'">Plati @Model.CurrentUser.LateFee<span>€</span> zakasnine</button>
 </div>
 
 

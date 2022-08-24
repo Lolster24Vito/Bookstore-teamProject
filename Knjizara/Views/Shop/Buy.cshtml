@@ -62,7 +62,7 @@
     <form asp-action="Buy">
         <input type="hidden" asp-for="Id" />
         <div style="text-align: center;">
-            <input class="btn btn-success" onclick="location.href='@Url.Action("BuyBook", "PayPalPayment", new { id = Model.Id })'" value="Pay with PayPal" />
+            <input class="btn btn-success" onclick="location.href='@Url.Action("StartPayment", "PayPal", new { name = Model.Title, price = Model.PriceForBuying })'" value="Pay with PayPal" />
         </div>
         <a asp-action="Index">Back to List</a>
     </form>
