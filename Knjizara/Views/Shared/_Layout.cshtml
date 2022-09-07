@@ -37,9 +37,17 @@
 
     <div id="auth">
 
-                           <partial name="_LoginPartial" />
+        <p id="logIn">
+            <a href="LoginReg.cshtml">
+                Log in
+            </a>
+        </p>
 
-        
+        <p id="registration">
+            Registration
+        </p>
+       <!-- <partial name="_LoginPartial" />   -->  
+
     </div>
 
     <div class="container">
@@ -51,7 +59,7 @@
 @*    <footer id="footer" class="width100vw">&copy; 2022 - BookMark - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></footer>
 *@
 @*    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)*@
+         @await RenderSectionAsync("Scripts", required: false)*@
 
 
 <script>
