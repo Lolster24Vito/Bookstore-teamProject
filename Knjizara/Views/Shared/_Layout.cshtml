@@ -12,7 +12,7 @@
 </head>
 <body>
 
-@*<partial name="_LoginPartial" />*@
+<partial id="loginPartial" name="_LoginPartial" />
 
     <img src="/images/BookMarkSimplified.png" id="logoMenu" alt="">
     
@@ -54,12 +54,6 @@
             @RenderBody()
         </main>
     </div>
-
-@*    <footer id="footer" class="width100vw">&copy; 2022 - BookMark - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></footer>
-*@
-@*    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)*@
-
 
 <script>
     const hamburger = document.getElementById("hamburger");
