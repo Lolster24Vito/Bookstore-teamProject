@@ -82,7 +82,8 @@
                     @Html.DisplayFor(modelItem => item.ShortDescription)
                 </td>
                 <td>
-                    <a asp-action="AuthorDetails" asp-route-id="@item.AuthorId">@item.Author.Name</a>
+                     @Html.ActionLink(item.Author.Name, "Details", "Authors", new {id = item.AuthorId}, null)
+
 
                 </td>
                 <td>
