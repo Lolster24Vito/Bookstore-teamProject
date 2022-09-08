@@ -1,7 +1,399 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+
+<head>
+    <link rel="stylesheet" href="~/css/global.css"/>
+	<link rel="stylesheet" href="~/css/loader.css"/>
+	<link rel="stylesheet" href="~/css/book.css"/>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <style>
+
+        body {
+           overflow-x: hidden;
+        }
+
+        #homeContainer {
+            width: 100vw;
+            height: auto;
+        }
+
+        #logo {
+            width: 50vw;
+            display: block;
+            margin: 10vh auto 0 auto;
+        }
+
+        #headlines {
+            width: 100vw;
+            height: 7vh;
+            display: block;
+            margin: auto;
+            text-align: center;
+            font-size: 2rem;
+			transform: translateY(50px);
+			opacity: 0;
+			transition: 150ms;
+        }
+
+		#headlines.show {
+			transform: translateY(0);
+			opacity: 1;
+		}
+
+        #todaysTopPicksHeadline {
+            display: block;
+            margin: 3rem auto 4rem auto;
+            text-align: center;
+            font-size: 2rem;
+        }
+
+        #todaysTopPicks {
+            width: 90vw;
+            height: auto;
+			margin: auto;
+            display: grid;
+			grid-template-columns: 1fr 1fr 1fr;
+			grid-template-rows: 1fr;
+			grid-row-gap: 10rem;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+	<div id="loader">
+  
+		<div class="bookLoader">
+
+			<div class="inner">
+			<div class="left"></div>
+			<div class="middle"></div>
+			<div class="right"></div>
+			</div>
+
+			<ul>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			</ul>
+
+		</div>
+    
+		<div class="message" id="loaderMessages"></div>
+
+	</div>
+
+    <div id="homeContainer">
+
+		<img src="/images/BookMark.png" id="logo" alt="BookMarkLogo">
+
+		<p id="headlines"></p>
+
+    </div>
+
+    <h1 id="todaysTopPicksHeadline">
+        Today's top picks:
+    </h1>
+
+    <div id="todaysTopPicks">
+
+		<div class='book'>
+
+			<ul class='hardcoverFront'>
+				<li>
+					<img src="https://images-na.ssl-images-amazon.com/images/I/81gtKoapHFL.jpg" class="bookCoverImg" alt="bookCover">
+				</li>
+				<li></li>
+			</ul>
+
+			<ul class='page'>
+
+				<li></li>				
+				<li>
+					
+					<div class="bookInfo">
+
+						<h1>
+							Title
+							@*@Html.DisplayFor(modelItem => item.Title)*@
+						</h1>
+
+						<h1>
+							ISBN
+							@*@Html.DisplayFor(modelItem => item.Isbn)*@
+						</h1>
+
+						<h1>
+							PriceForBorrowing
+							@*@Html.DisplayFor(modelItem => item.PriceForBorrowing)*@
+						</h1>
+
+						<h1>
+							PriceForBuying
+							@*@Html.DisplayFor(modelItem => item.PriceForBuying)*@
+						</h1>
+
+						<h1>
+							StockAvailabilty
+							@*@Html.DisplayFor(modelItem => item.StockAvailabilty)*@
+						</h1>
+
+						@*<h1>
+							<!-- TODO: if empty or invalid show default image -->
+							<img src= @item.CoverURL asp-append-version="true" width="100">
+						</h1>*@
+
+						<h1>
+							LongDescription
+							@*@Html.DisplayFor(modelItem => item.LongDescription)*@
+						</h1>
+
+						<h1>
+							ShortDescription
+							@*@Html.DisplayFor(modelItem => item.ShortDescription)*@
+						</h1>
+
+					</div>
+
+				</li>
+				<li>
+					<div class="reverse buyBorrow">
+						<a class="btn" href="#">Buy</a>
+						<a class="btn" href="#">Borrow</a>
+					</div>
+				</li>
+				<li></li>
+			</ul>
+
+			<ul class='hardcoverBack'>
+				<li></li>
+				<li></li>
+			</ul>
+
+			<ul class='book_spine'>
+				<li></li>
+			</ul>
+
+		</div>
+
+		<div class='book'>
+
+			<ul class='hardcoverFront'>
+				<li>
+					<img src="https://images-na.ssl-images-amazon.com/images/I/41xShlnTZTL._SX376_BO1,204,203,200_.jpg" class="bookCoverImg" alt="bookCover">
+				</li>
+				<li></li>
+			</ul>
+
+			<ul class='page'>
+
+				<li></li>				
+				<li>
+					
+					<div class="bookInfo">
+
+						<h1>
+							Title
+							@*@Html.DisplayFor(modelItem => item.Title)*@
+						</h1>
+
+						<h1>
+							ISBN
+							@*@Html.DisplayFor(modelItem => item.Isbn)*@
+						</h1>
+
+						<h1>
+							PriceForBorrowing
+							@*@Html.DisplayFor(modelItem => item.PriceForBorrowing)*@
+						</h1>
+
+						<h1>
+							PriceForBuying
+							@*@Html.DisplayFor(modelItem => item.PriceForBuying)*@
+						</h1>
+
+						<h1>
+							StockAvailabilty
+							@*@Html.DisplayFor(modelItem => item.StockAvailabilty)*@
+						</h1>
+
+						@*<h1>
+							<!-- TODO: if empty or invalid show default image -->
+							<img src= @item.CoverURL asp-append-version="true" width="100">
+						</h1>*@
+
+						<h1>
+							LongDescription
+							@*@Html.DisplayFor(modelItem => item.LongDescription)*@
+						</h1>
+
+						<h1>
+							ShortDescription
+							@*@Html.DisplayFor(modelItem => item.ShortDescription)*@
+						</h1>
+
+					</div>
+
+				</li>
+				<li>
+					<div class="reverse buyBorrow">
+						<a class="btn" href="#">Buy</a>
+						<a class="btn" href="#">Borrow</a>
+					</div>
+				</li>
+				<li></li>
+			</ul>
+
+			<ul class='hardcoverBack'>
+				<li></li>
+				<li></li>
+			</ul>
+
+			<ul class='book_spine'>
+				<li></li>
+			</ul>
+
+		</div>
+
+		<div class='book'>
+
+			<ul class='hardcoverFront'>
+				<li>
+					<img src="https://images-na.ssl-images-amazon.com/images/I/81HCIXim7hL.jpg" class="bookCoverImg" alt="bookCover">
+				</li>
+				<li></li>
+			</ul>
+
+			<ul class='page'>
+
+				<li></li>				
+				<li>
+					
+					<div class="bookInfo">
+
+						<h1>
+							Title
+							@*@Html.DisplayFor(modelItem => item.Title)*@
+						</h1>
+
+						<h1>
+							ISBN
+							@*@Html.DisplayFor(modelItem => item.Isbn)*@
+						</h1>
+
+						<h1>
+							PriceForBorrowing
+							@*@Html.DisplayFor(modelItem => item.PriceForBorrowing)*@
+						</h1>
+
+						<h1>
+							PriceForBuying
+							@*@Html.DisplayFor(modelItem => item.PriceForBuying)*@
+						</h1>
+
+						<h1>
+							StockAvailabilty
+							@*@Html.DisplayFor(modelItem => item.StockAvailabilty)*@
+						</h1>
+
+						@*<h1>
+							<!-- TODO: if empty or invalid show default image -->
+							<img src= @item.CoverURL asp-append-version="true" width="100">
+						</h1>*@
+
+						<h1>
+							LongDescription
+							@*@Html.DisplayFor(modelItem => item.LongDescription)*@
+						</h1>
+
+						<h1>
+							ShortDescription
+							@*@Html.DisplayFor(modelItem => item.ShortDescription)*@
+						</h1>
+
+					</div>
+
+				</li>
+				<li>
+					<div class="reverse buyBorrow">
+						<a class="btn" href="#">Buy</a>
+						<a class="btn" href="#">Borrow</a>
+					</div>
+				</li>
+				<li></li>
+			</ul>
+
+			<ul class='hardcoverBack'>
+				<li></li>
+				<li></li>
+			</ul>
+
+			<ul class='book_spine'>
+				<li></li>
+			</ul>
+
+		</div>
+
+	</div>
+
+	<script src=~/js/loader.js></script>
+
+	<script>
+
+		const headlines = document.getElementById("headlines");
+
+		const headlineWords = [
+			"is a bookstore.",
+			"has all your favourite books.",
+			"has all your favourite authors.",
+			"has books for all ages."
+		];
+
+		let i = 0;
+
+		headlines.innerHTML = headlineWords[0];
+
+		const changeHeadlines = () => {
+
+			headlines.classList.add("show");
+
+			headlines.innerHTML = headlineWords[i];
+
+			setTimeout(() => {headlines.classList.remove("show")}, 1800);
+		
+			if (i < headlineWords.length - 1) {
+				i++;
+			}
+			else {
+				i = 0;
+			}
+		};
+
+		setInterval(changeHeadlines, 2500);
+
+	</script>
+
+</body>
