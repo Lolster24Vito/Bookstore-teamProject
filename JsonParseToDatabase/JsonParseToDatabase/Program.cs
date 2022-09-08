@@ -16,25 +16,19 @@ namespace JsonParseToDatabase
 
         static void DbInsert(string upit)
         {
-
-           
-                using (DbConnection oConnection = new SqlConnection(connectionString))
-                using (DbCommand oCommand = oConnection.CreateCommand())
+            using (DbConnection oConnection = new SqlConnection(connectionString))
+            using (DbCommand oCommand = oConnection.CreateCommand())
+            {
+                oCommand.CommandText = upit;
+                oConnection.Open();
+                using (DbDataReader oReader = oCommand.ExecuteReader())
                 {
-                    oCommand.CommandText = upit;
-                    oConnection.Open();
-                    using (DbDataReader oReader = oCommand.ExecuteReader())
-                    {
-                    }
                 }
-            
+            }
         }
 
         static bool CheckExistingTable(string upit)
         {
-
-            
-            
             using (DbConnection oConnection = new SqlConnection(connectionString))
             using (DbCommand oCommand = oConnection.CreateCommand())
             {
@@ -50,15 +44,12 @@ namespace JsonParseToDatabase
                             return true;
                         }
                     }
-                    
                 }
             }
             return false;
         }
         static bool CheckTitleNameTable(string upit)
         {
-
-
 
             using (DbConnection oConnection = new SqlConnection(connectionString))
             using (DbCommand oCommand = oConnection.CreateCommand())

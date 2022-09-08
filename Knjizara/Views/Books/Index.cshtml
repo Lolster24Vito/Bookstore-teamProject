@@ -4,92 +4,334 @@
     ViewData["Title"] = "Books";
 }
 
-<h1>Books</h1>
+<head>
 
-@using (Html.BeginForm())
-{
-    <p>
-        Search: @Html.TextBox("SearchString")
-        <input type="submit" value="Search" />
-    </p>
-}
+    <link rel="stylesheet" href="~/css/global.css"/>
+	<link rel="stylesheet" href="~/css/book.css"/>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <style>
+
+
+        h1 {
+            font-size: 0.8rem;
+        }
+
+        #search {
+			display: block;
+            margin: 15vh auto;
+        }
+
+        #bookContainer {
+            width: 100vw;
+            height: auto;
+			margin-top: 20vh;
+            display: grid;
+			grid-template-columns: 1fr 1fr 1fr;
+			grid-template-rows: 1fr;
+			grid-row-gap: 10rem;
+			grid-column-gap: 1rem;
+        }
+
+    </style>
+
+</head>
+
+<h1>Books</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
-    <a asp-action="DeletedBooks">Deleted Books</a>
 </p>
 
-<table class="table">
-    <thead>
+<div id="bookContainer">
+
+	<div class='book'>
+
+				<ul class='hardcoverFront'>
+					<li>
+						<img src="https://images-na.ssl-images-amazon.com/images/I/81gtKoapHFL.jpg" class="bookCoverImg" alt="bookCover">
+					</li>
+					<li></li>
+				</ul>
+
+				<ul class='page'>
+
+					<li></li>				
+					<li>
+					
+						<div class="bookInfo">
+
+							<h1>
+								Title
+								@*@Html.DisplayFor(modelItem => item.Title)*@
+							</h1>
+
+							<h1>
+								ISBN
+								@*@Html.DisplayFor(modelItem => item.Isbn)*@
+							</h1>
+
+							<h1>
+								PriceForBorrowing
+								@*@Html.DisplayFor(modelItem => item.PriceForBorrowing)*@
+							</h1>
+
+							<h1>
+								PriceForBuying
+								@*@Html.DisplayFor(modelItem => item.PriceForBuying)*@
+							</h1>
+
+							<h1>
+								StockAvailabilty
+								@*@Html.DisplayFor(modelItem => item.StockAvailabilty)*@
+							</h1>
+
+							@*<h1>
+								<!-- TODO: if empty or invalid show default image -->
+								<img src= @item.CoverURL asp-append-version="true" width="100">
+							</h1>*@
+
+							<h1>
+								LongDescription
+								@*@Html.DisplayFor(modelItem => item.LongDescription)*@
+							</h1>
+
+							<h1>
+								ShortDescription
+								@*@Html.DisplayFor(modelItem => item.ShortDescription)*@
+							</h1>
+
+						</div>
+
+					</li>
+					<li>
+						<div class="reverse buyBorrow">
+							<a class="btn" href="#">Buy</a>
+							<a class="btn" href="#">Borrow</a>
+						</div>
+					</li>
+					<li></li>
+				</ul>
+
+				<ul class='hardcoverBack'>
+					<li></li>
+					<li></li>
+				</ul>
+
+				<ul class='book_spine'>
+					<li></li>
+				</ul>
+
+			</div>
+
+	<div class='book'>
+
+		<ul class='hardcoverFront'>
+			<li>
+				<img src="https://images-na.ssl-images-amazon.com/images/I/41xShlnTZTL._SX376_BO1,204,203,200_.jpg" class="bookCoverImg" alt="bookCover">
+			</li>
+			<li></li>
+		</ul>
+
+		<ul class='page'>
+
+			<li></li>				
+			<li>
+					
+				<div class="bookInfo">
+
+					<h1>
+						Title
+						@*@Html.DisplayFor(modelItem => item.Title)*@
+					</h1>
+
+					<h1>
+						ISBN
+						@*@Html.DisplayFor(modelItem => item.Isbn)*@
+					</h1>
+
+					<h1>
+						PriceForBorrowing
+						@*@Html.DisplayFor(modelItem => item.PriceForBorrowing)*@
+					</h1>
+
+					<h1>
+						PriceForBuying
+						@*@Html.DisplayFor(modelItem => item.PriceForBuying)*@
+					</h1>
+
+					<h1>
+						StockAvailabilty
+						@*@Html.DisplayFor(modelItem => item.StockAvailabilty)*@
+					</h1>
+
+					@*<h1>
+						<!-- TODO: if empty or invalid show default image -->
+						<img src= @item.CoverURL asp-append-version="true" width="100">
+					</h1>*@
+
+					<h1>
+						LongDescription
+						@*@Html.DisplayFor(modelItem => item.LongDescription)*@
+					</h1>
+
+					<h1>
+						ShortDescription
+						@*@Html.DisplayFor(modelItem => item.ShortDescription)*@
+					</h1>
+
+				</div>
+
+			</li>
+			<li>
+				<div class="reverse buyBorrow">
+					<a class="btn" href="#">Buy</a>
+					<a class="btn" href="#">Borrow</a>
+				</div>
+			</li>
+			<li></li>
+		</ul>
+
+		<ul class='hardcoverBack'>
+			<li></li>
+			<li></li>
+		</ul>
+
+		<ul class='book_spine'>
+			<li></li>
+		</ul>
+
+	</div>
+
+	<div class='book'>
+
+		<ul class='hardcoverFront'>
+			<li>
+				<img src="https://images-na.ssl-images-amazon.com/images/I/81HCIXim7hL.jpg" class="bookCoverImg" alt="bookCover">
+			</li>
+			<li></li>
+		</ul>
+
+		<ul class='page'>
+
+			<li></li>				
+			<li>
+					
+				<div class="bookInfo">
+
+					<h1>
+						Title
+						@*@Html.DisplayFor(modelItem => item.Title)*@
+					</h1>
+
+					<h1>
+						ISBN
+						@*@Html.DisplayFor(modelItem => item.Isbn)*@
+					</h1>
+
+					<h1>
+						PriceForBorrowing
+						@*@Html.DisplayFor(modelItem => item.PriceForBorrowing)*@
+					</h1>
+
+					<h1>
+						PriceForBuying
+						@*@Html.DisplayFor(modelItem => item.PriceForBuying)*@
+					</h1>
+
+					<h1>
+						StockAvailabilty
+						@*@Html.DisplayFor(modelItem => item.StockAvailabilty)*@
+					</h1>
+
+					@*<h1>
+						<!-- TODO: if empty or invalid show default image -->
+						<img src= @item.CoverURL asp-append-version="true" width="100">
+					</h1>*@
+
+					<h1>
+						LongDescription
+						@*@Html.DisplayFor(modelItem => item.LongDescription)*@
+					</h1>
+
+					<h1>
+						ShortDescription
+						@*@Html.DisplayFor(modelItem => item.ShortDescription)*@
+					</h1>
+
+				</div>
+
+			</li>
+			<li>
+				<div class="reverse buyBorrow">
+					<a class="btn" href="#">Buy</a>
+					<a class="btn" href="#">Borrow</a>
+				</div>
+			</li>
+			<li></li>
+		</ul>
+
+		<ul class='hardcoverBack'>
+			<li></li>
+			<li></li>
+		</ul>
+
+		<ul class='book_spine'>
+			<li></li>
+		</ul>
+
+	</div>
+
+</div>
+
+@*@foreach (var item in Model) {
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Isbn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PriceForBorrowing)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PriceForBuying)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StockAvailabilty)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CoverURL)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LongDescription)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ShortDescription)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Author)
-            </th>
-            <th></th>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Isbn)
+            </td>
+
+            <td>
+                @Html.ActionLink(item.Author.Name, "Details", "Authors", new {id = item?.AuthorId}, null)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.PriceForBorrowing)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.PriceForBuying)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.StockAvailabilty)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.CoverURL)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.LongDescription)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.ShortDescription)
+            </td>
+
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+
         </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Isbn)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PriceForBorrowing)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PriceForBuying)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StockAvailabilty)
-                </td>
-                <td>
-                    <!-- TODO: if empty or invalid show default image -->
-                    <img src=@item.CoverURL asp-append-version="true" width="100">
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LongDescription)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ShortDescription)
-                </td>
-                <td>
-                     @Html.ActionLink(item.Author.Name, "Details", "Authors", new {id = item.AuthorId}, null)
-
-
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+}*@
