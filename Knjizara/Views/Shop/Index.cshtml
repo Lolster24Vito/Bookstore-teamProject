@@ -18,13 +18,21 @@
         margin-top: 10vh;
     }
 
-    h1 {
+    #headline {
         text-align: center;
         font-size: 2rem;
+		margin: 2rem;
     }
 
 	#searchDiv {
-		width: 100vw;
+		width: 20vw;
+		margin: auto;
+		text-align: center;
+	}
+
+	#bookSearch {
+		padding: 0.1rem 0.3rem;
+		margin: 0.8rem;
 	}
 
     #bookContainer {
@@ -41,7 +49,7 @@
 
 <div id="container">
 
-    <h1>
+    <h1 id="headline">
         Shop for your favourite books!
     </h1>
 
@@ -52,6 +60,7 @@
             Search: @Html.TextBox("SearchString")  
             <input id="bookSearch" type="submit" value="Search" />  
         </div>  
+
     }  
 
 </div>

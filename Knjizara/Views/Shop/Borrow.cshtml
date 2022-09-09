@@ -4,66 +4,29 @@
     ViewData["Title"] = "Borrow";
 }
 
-<h1>Borrow</h1>
+<h1>Delete</h1>
 
 <h3>Are you sure you want to borrow this book?</h3>
-<div>
-    <h4>Book:</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Book.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Book.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Book.Isbn)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Book.Isbn)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Book.PriceForBorrowing)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Book.PriceForBorrowing)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Book.PriceForBuying)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Book.PriceForBuying)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Book.StockAvailabilty)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Book.StockAvailabilty)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Book.CoverURL)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Book.CoverURL)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Book.LongDescription)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Book.LongDescription)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Book.ShortDescription)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Book.ShortDescription)
-        </dd>
+<style>
 
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Book.ShortDescription)
-        </dd>
-    </dl>
+	h3 {
+		margin: 4rem;
+		text-align: center;
+	}
+
+	#form {
+
+		font-size: 2rem;
+		width: 50vw;
+		display:block;
+		margin: 3rem auto;
+		text-align: center;
+	}
+
+</style>
+
+<h3>Are you sure you want to buy this?</h3>
+
     
     <form asp-action="Borrow">
         <input type="hidden" asp-for="Book.Id" />
@@ -77,4 +40,4 @@
         <input type="submit" value="Borrow" class="btn btn-success" /> |
         <a asp-action="Index">Back to List</a>
     </form>
-</div>
+

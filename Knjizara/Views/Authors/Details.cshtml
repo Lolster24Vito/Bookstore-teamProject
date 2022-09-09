@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Knjizara.Models.BaseEntities.Author>
+﻿@model Knjizara.Models.BaseEntities.Author
 
 @{
     ViewData["Title"] = "Index";
@@ -6,12 +6,39 @@
 
 
 <style>
-    #container {
-        margin-top: 10vh;
+    h1 {
+        margin: 3rem;
     }
+
+    #container {
+        text-align: center;
+        margin-top: 3rem;
+    }
+
+    #back a {
+        padding-left: 40%;
+    }
+
+    table {
+        width: 90vw;
+        margin: 2rem auto;
+    }
+
+    th, td {
+        border-bottom: 2px solid var(--brown);
+        margin: 2rem;
+        padding: 2rem 0.5rem 2rem 1rem;
+
+    }
+
+    p { 
+        margin: 2rem;
+    }
+
 </style>
 
-<div id="container" class="width100vw">
+
+<div id="container">
 
 
 <h1>Authors</h1>
@@ -19,7 +46,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table" cellspacing="0">
     <thead>
         <tr>
             <th>
@@ -31,15 +58,15 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Books) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
             </td>
         </tr>
 }

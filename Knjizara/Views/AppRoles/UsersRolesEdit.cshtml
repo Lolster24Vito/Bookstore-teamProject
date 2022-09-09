@@ -5,6 +5,30 @@
     ViewData["Title"] = "UsersRolesEdit";
 }
 
+<style>
+
+    #container {
+        margin-top: 10vh;
+        text-align: center;
+    }
+
+    table {
+        width: 75vw;
+        margin: auto;
+    }
+
+    th, td {
+        border-bottom: 2px solid var(--brown);
+    }
+
+    p { 
+        margin: 2rem;
+    }
+
+</style>
+
+<div id="container" class="width100vw">
+
 <h1>Add admins</h1>
 
 @using (Html.BeginForm())
@@ -15,7 +39,7 @@
     </p>
 }
 
-<table class="table">
+<table class="table" cellspacing="0">
     <thead>
         <tr>
 
@@ -57,3 +81,4 @@
     </tbody>
 </table>
 
+</div>
