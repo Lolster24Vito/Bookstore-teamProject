@@ -4,31 +4,7 @@
     ViewData["Title"] = "Details";
 }
 
-<style>
-
-    #container {
-        margin-top: 10vh;
-        text-align: center;
-    }
-
-    table {
-        width: 75vw;
-        margin: auto;
-    }
-
-    th, td {
-        border-bottom: 2px solid var(--brown);
-    }
-
-    p { 
-        margin: 2rem;
-    }
-
-</style>
-
-<div id="container" class="width100vw">
-
-<h1>User Details</h1>
+<h1>Details</h1>
 
 <div>
     <h4>AppUser</h4>
@@ -78,7 +54,7 @@
 <h2>Posuđene knjige</h2>
 @if (Model.BorrowedBooks?.Count > 0)
 {
-    <table class="table" cellspacing="0">
+    <table class="table">
         <thead>
             <tr>
                 <th>
@@ -168,5 +144,3 @@ else
 {
     <p class="p-2">Nemate kupljenih knjiga</p>
 }
-
-</div>
