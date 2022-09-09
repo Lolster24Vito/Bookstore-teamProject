@@ -3,8 +3,30 @@
 @{
     ViewData["Title"] = "Details";
 }
+<style>
 
-<h1>Details</h1>
+	#headline {
+		text-align: center;
+		margin: 5rem;
+	}
+
+	#editing {
+		margin: 3rem;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+	}
+
+	#editing a {
+		margin: 1rem 2rem;
+		text-align: center;
+	}
+
+</style>
+
+<link rel="stylesheet" href="~/css/book.css"/>
+
+<h1 id="headline">Details</h1>
 
 <div class='book'>
 
@@ -65,9 +87,7 @@
 
 </div>
 
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-	    <a asp-action="Delete" asp-route-id="@Model?.Id">Delete</a> |
-
+<div id="editing">
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
     <a asp-action="Index">Back to List</a>
 </div>

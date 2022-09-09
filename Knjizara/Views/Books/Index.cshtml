@@ -18,15 +18,22 @@
         margin-top: 10vh;
     }
 
-    h1 {
+    #headline {
         text-align: center;
         font-size: 2rem;
+		margin: 2rem;
     }
 
-    #search {
-		display: block;
-        margin: 15vh auto;
-    }
+	#searchDiv {
+		width: 20vw;
+		margin: auto;
+		text-align: center;
+	}
+
+	#bookSearch {
+		padding: 0.1rem 0.3rem;
+		margin: 0.8rem;
+	}
 
     #bookContainer {
         height: auto;
@@ -38,18 +45,18 @@
 		grid-column-gap: 1rem;
     }
 
-	#create {
-		margin: auto;
-		
+	#editing a {
+		margin: 1rem auto;
+		margin-left: 46%;
+		text-align: center;
 	}
 
 </style>
 
-
 <div id="container">
 
-    <h1>
-        Books
+    <h1 id="headline">
+        Shop for your favourite books!
     </h1>
 
     
@@ -57,15 +64,15 @@
     {  
         <div id="searchDiv">  
             Search: @Html.TextBox("SearchString")  
-            <input type="submit" value="Search" />  
+            <input id="bookSearch" type="submit" value="Search" />  
         </div>  
+
     }  
 
 </div>
 
-<p id="create">
+<p id="editing">
     <a asp-action="Create">Create New</a> <br />
-
     <a asp-action="DeletedBooks">Deleted Books</a>
 </p>
 
