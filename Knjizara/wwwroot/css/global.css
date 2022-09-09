@@ -10,8 +10,8 @@ body::-webkit-scrollbar {
 }
 
 ::selection {
-    background: transparent;
-    color: black;
+    background: var(--brown);
+    color: white;
 }
 
 * {
@@ -31,6 +31,11 @@ body {
 a {
     text-decoration: none;
     color: var(--brown);
+}
+
+h2 {
+    text-align: center;
+    margin: 2rem;
 }
 
 a, a:visited, a:hover, a:active {
@@ -71,10 +76,10 @@ a, a:visited, a:hover, a:active {
 
 #menu {
     position: fixed;
-    top: -5.85rem;
+    top: -4rem;
     left: 0;
     width: 100vw;
-    height: 5.85rem;
+    height: 4em;
     z-index: 1;
     list-style: none;
     display: flex;
@@ -84,19 +89,30 @@ a, a:visited, a:hover, a:active {
     transition: 0.6s ease-in;
 }
 
-#menu.active {
-    top: 0;
+    #menu.active {
+        top: 0;
+    }
+
+#loginPartial {
+    position: absolute;
+    top: 2vh;
+    right: 7vw;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    z-index: 100;
+    gap: 1rem;
 }
 
 .item {
-    font-size: 2.5rem;
+    font-size: 1.4rem;
     margin: 0 2rem;
     transition: 0.5s ease-in-out;
 }
 
-.item:hover {
-    transform: scale(1.1);
-}
+    .item:hover {
+        transform: scale(1.1);
+    }
 
 #hamburger {
     top: 0.4rem;
@@ -115,34 +131,24 @@ a, a:visited, a:hover, a:active {
     border-radius: 1rem;
 }
 
-.bar.active:nth-child(2) {
-    opacity: 0;
-}
+    .bar.active:nth-child(2) {
+        opacity: 0;
+    }
 
-.bar.active:nth-child(1) {
-    transform: translateY(16px) rotate(45deg);
-}
+    .bar.active:nth-child(1) {
+        transform: translateY(16px) rotate(45deg);
+    }
 
-.bar.active:nth-child(3) {
-    transform: translateY(-16px) rotate(-45deg);
-}
+    .bar.active:nth-child(3) {
+        transform: translateY(-16px) rotate(-45deg);
+    }
 
 #logoMenu {
-    position: fixed;
+    position: absolute;
     top: 0.5vw;
     left: 0.5vw;
     width: 5rem;
     z-index: 2;
-}
-
-#auth {
-    position: fixed;
-    top: 2vh;
-    right: 10vw;
-    width: 10vw;
-    z-index: 2;
-    text-align: left;
-    font-size: 1.3rem;
 }
 
 /*#footer {
@@ -154,3 +160,12 @@ a, a:visited, a:hover, a:active {
     background-color: var(--grey);
     text-align: center;
 }*/
+
+.row {
+    margin-top: 10vh;
+    text-align: center;
+}
+
+form div {
+    margin: 1rem;
+}

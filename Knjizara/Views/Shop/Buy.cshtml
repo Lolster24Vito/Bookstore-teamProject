@@ -3,67 +3,91 @@
 @{
     ViewData["Title"] = "Buy";
 }
+<link rel="stylesheet" href="~/css/global.css"/>
+<link rel="stylesheet" href="~/css/book.css"/>
+
+<style>
+
+	h3 {
+		margin: 4rem;
+		text-align: center;
+	}
+
+	#form {
+
+		font-size: 2rem;
+		width: 50vw;
+		display:block;
+		margin: 3rem auto;
+		text-align: center;
+	}
+
+</style>
 
 <h3>Are you sure you want to buy this?</h3>
-<div>
-    <h4>Book</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Isbn)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Isbn)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PriceForBorrowing)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PriceForBorrowing)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PriceForBuying)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PriceForBuying)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.StockAvailabilty)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.StockAvailabilty)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CoverURL)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CoverURL)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.LongDescription)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.LongDescription)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ShortDescription)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ShortDescription)
-        </dd>
-    </dl>
+<div class='book'>
 
-    <form asp-action="Buy">
-        <input type="hidden" asp-for="Id" />
-        <div style="text-align: center;">
-            <input class="btn btn-success" onclick="location.href='@Url.Action("StartPayment", "PayPal", new { name = Model.Title, price = Model.PriceForBuying })'" value="Pay with PayPal" />
-        </div>
-        <a asp-action="Index">Back to List</a>
-    </form>
+	<ul class='hardcoverFront'>
+		<li>
+            <img src=@Model.CoverURL asp-append-version="true" class="bookCoverImg" alt="bookCover">
+		</li>
+		<li></li>
+	</ul>
+
+	<ul class='page'>
+
+		<li></li>				
+		<li>
+					
+			<div class="bookInfo">
+
+				<h1>
+					Title: @Html.DisplayFor(model => model.Title)
+				</h1>
+
+                <h1>
+                    Author: @Html.DisplayFor(model => model.Author)
+                </h1>
+
+				<h1>
+					ISBN: @Html.DisplayFor(model => model.Isbn)
+				</h1>
+
+				<h1>
+					PriceForBorrowing: @Html.DisplayFor(model => model.PriceForBorrowing)
+				</h1> 
+
+				<h1>
+					PriceForBuying: @Html.DisplayFor(model => model.PriceForBuying)
+				</h1>
+
+				<h1>
+					StockAvailabilty: @Html.DisplayFor(model => model.StockAvailabilty)
+				</h1>
+
+			</div>
+
+		</li>
+		<li>
+		</li>
+		<li></li>
+	</ul>
+
+	<ul class='hardcoverBack'>
+		<li></li>
+		<li></li>
+	</ul>
+
+	<ul class='book_spine'>
+		<li></li>
+	</ul>
+
 </div>
+
+<form id="form" asp-action="Buy">
+    <input asp-for="Id" />
+    <div>
+        <input onclick="location.href='@Url.Action("StartPayment", "PayPal", new { name = Model.Title, price = Model.PriceForBuying })'" value="Pay with PayPal" />
+    </div>
+    <a asp-action="Index">Back to List</a>
+</form>

@@ -8,7 +8,22 @@
 <style>
     #container {
         margin-top: 10vh;
+        text-align: center;
     }
+
+    table {
+        width: 75vw;
+        margin: auto;
+    }
+
+    th, td {
+        border-bottom: 2px solid var(--brown);
+    }
+
+    p { 
+        margin: 2rem;
+    }
+
 </style>
 
 <div id="container" class="width100vw">
@@ -19,15 +34,16 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table cellspacing="0">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                Choose:
+                @Html.DisplayNameFor(model => model.Description)
             </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -35,6 +51,9 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
