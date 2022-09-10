@@ -1,232 +1,134 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<Knjizara.Models.Books.Book>
+
+@{
+    ViewData["Title"] = "Index";
 }
 
-<head>
-    <link rel="stylesheet" href="~/css/global.css"/>
-	<link rel="stylesheet" href="~/css/loader.css"/>
-	<link rel="stylesheet" href="~/css/book.css"/>
+<link rel="stylesheet" href="~/css/global.css"/>
+<link rel="stylesheet" href="~/css/book.css"/>
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
 
-    <style>
+<style>
 
-        body {
-           overflow-x: hidden;
-        }
+    #container {
+        margin-top: 10vh;
+    }
 
-        #homeContainer {
-            width: 100vw;
-            height: auto;
-        }
+    #headline {
+        text-align: center;
+        font-size: 2rem;
+		margin: 2rem;
+    }
 
-        #logo {
-            width: 50vw;
-            display: block;
-            margin: 10vh auto 0 auto;
-        }
+	#searchDiv {
+		width: 20vw;
+		margin: auto;
+		text-align: center;
+	}
 
-        #headlines {
-            width: 100vw;
-            height: 7vh;
-            display: block;
-            margin: auto;
-            text-align: center;
-            font-size: 2rem;
-			transform: translateY(50px);
-			opacity: 0;
-			transition: 150ms;
-        }
+	#bookSearch {
+		padding: 0.1rem 0.3rem;
+		margin: 0.8rem;
+	}
 
-		#headlines.show {
-			transform: translateY(0);
-			opacity: 1;
-		}
+    #bookContainer {
+        height: auto;
+		margin-top: 10vh;
+        display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-rows: 1fr;
+		grid-row-gap: 10rem;
+		grid-column-gap: 1rem;
+    }
 
-        #todaysTopPicksHeadline {
-            display: block;
-            margin: 3rem auto 4rem auto;
-            text-align: center;
-            font-size: 2rem;
-        }
+	#editing a {
+		margin: 1rem auto;
+		margin-left: 46%;
+		text-align: center;
+	}
 
-        #todaysTopPicks {
-            width: 90vw;
-            height: auto;
-			margin: auto;
-            display: grid;
-			grid-template-columns: 1fr 1fr 1fr;
-			grid-template-rows: 1fr;
-			grid-row-gap: 10rem;
-        }
+</style>
 
-    </style>
+<div id="container">
 
-</head>
-
-<body>
-
-	<div id="loader">
-  
-		<div class="bookLoader">
-
-			<div class="inner">
-			<div class="left"></div>
-			<div class="middle"></div>
-			<div class="right"></div>
-			</div>
-
-			<ul>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			</ul>
-
-		</div>
-    
-		<div class="message" id="loaderMessages"></div>
-
-	</div>
-
-    <div id="homeContainer">
-
-		<img src="/images/BookMark.png" id="logo" alt="BookMarkLogo">
-
-		<p id="headlines"></p>
-
-    </div>
-
-    <h1 id="todaysTopPicksHeadline">
-        Today's top picks:
+    <h1 id="headline">
+        Shop for your favourite books!
     </h1>
 
-    <div id="todaysTopPicks">
+    
+    @using (Html.BeginForm())  
+    {  
+        <div id="searchDiv">  
+            Search: @Html.TextBox("SearchString")  
+            <input id="bookSearch" type="submit" value="Search" />  
+        </div>  
 
-		<div class='book'>
+    }  
 
-			<ul class='hardcoverFront'>
-				<li>
-					<img src="https://images-na.ssl-images-amazon.com/images/I/81gtKoapHFL.jpg" class="bookCoverImg" alt="bookCover">
-				</li>
-				<li></li>
-			</ul>
+</div>
 
-			<ul class='page'>
+<p id="editing">
+    <a asp-action="Create">Create New</a> <br />
+    <a asp-action="DeletedBooks">Deleted Books</a>
+</p>
 
-				<li></li>				
-				<li>
-					
-					<div class="bookInfo">
+<div id="bookContainer" class="width100vw">
 
-						<h1>
-							Title: Design Patterns: Elements of Reusable Object-Oriented Software
-						</h1>
+    @foreach (var item in Model) {
+       <div class='book'>
 
-                        <h1>
-                            Author: Erich Gamma, Richard Helm, Ralph Johnson
-                        </h1>
-
-						<h1>
-							ISBN: 01001101
-						</h1>
-
-						<h1>
-							PriceForBorrowing: 0110
-						</h1> 
-
-						<h1>
-							PriceForBuying: 1110
-						</h1>
-
-						<h1>
-							StockAvailabilty: 0010011
-						</h1>
-
-					</div>
-
-				</li>
-				<li>
-				</li>
-				<li></li>
-			</ul>
-
-			<ul class='hardcoverBack'>
-				<li></li>
-				<li></li>
-			</ul>
-
-			<ul class='book_spine'>
-				<li></li>
-			</ul>
-
-    </div>
-
-		<div class='book'>
-
-			<ul class='hardcoverFront'>
-				<li>
-					<img src="https://images-na.ssl-images-amazon.com/images/I/41xShlnTZTL._SX376_BO1,204,203,200_.jpg" class="bookCoverImg" alt="bookCover">
-				</li>
-				<li></li>
-			</ul>
+				<ul class='hardcoverFront'>
+					<li>
+                        <img src= @item.CoverURL asp-append-version="true" class="bookCoverImg" alt="bookCover">
+					</li>
+					<li></li>
+				</ul>
 
 				<ul class='page'>
 
-				<li></li>				
-				<li>
+					<li></li>				
+					<li>
 					
-					<div class="bookInfo">
+						<div class="bookInfo">
 
-						<h1>
-							Title: Clean Code
-						</h1>
+							<h1>
+								Title: @Html.DisplayFor(modelItem => item.Title)
+							</h1>
 
-                        <h1>
-                            Author: Robert Cecil Martin
-                        </h1>
+                            <h1>
+                                Author: <a asp-action="AuthorDetails" asp-route-id="@item.AuthorId">@item.Author.Name</a> 
+                            </h1>
 
-						<h1>
-							ISBN: 1101111
-						</h1>
+							<h1>
+								ISBN: @Html.DisplayFor(modelItem => item.Isbn)
+							</h1>
 
-						<h1>
-							PriceForBorrowing: 1010
-						</h1> 
+							<h1>
+								PriceForBorrowing: @Html.DisplayFor(modelItem => item.PriceForBorrowing)
+							</h1> 
 
-						<h1>
-							PriceForBuying: 1011
-						</h1>
+							<h1>
+								PriceForBuying: @Html.DisplayFor(modelItem => item.PriceForBuying)
+							</h1>
 
-						<h1>
-							StockAvailabilty: 0100111
-						</h1>
+							<h1>
+								StockAvailabilty: @Html.DisplayFor(modelItem => item.StockAvailabilty)
+							</h1>
 
+						</div>
 
-					</div>
-
-				</li>
-				<li>
-				</li>
-				<li></li>
-			</ul>
+					</li>
+					<li>
+						<div class="reverse buyBorrow">
+                            <a class="btn" asp-action="Details" asp-route-id="@item.Id">Details</a> 
+						</div>
+					</li>
+					<li></li>
+				</ul>
 
 				<ul class='hardcoverBack'>
 					<li></li>
@@ -238,103 +140,5 @@
 				</ul>
 
        </div>
-
-		<div class='book'>
-
-			<ul class='hardcoverFront'>
-				<li>
-					<img src="https://images-na.ssl-images-amazon.com/images/I/81HCIXim7hL.jpg" class="bookCoverImg" alt="bookCover">
-				</li>
-				<li></li>
-			</ul>
-
-				<ul class='page'>
-
-				<li></li>				
-				<li>
-					
-					<div class="bookInfo">
-
-						<h1>
-							Title: Bjarne Stroustrup
-						</h1>
-
-                        <h1>
-                            Author: Programming: Principles and Practice Using C++
-                        </h1>
-
-						<h1>
-							ISBN: 1101111
-						</h1>
-
-						<h1>
-							PriceForBorrowing: 1010
-						</h1> 
-
-						<h1>
-							PriceForBuying: 1011
-						</h1>
-
-						<h1>
-							StockAvailabilty: 0100111
-						</h1>
-
-					</div>
-
-				</li>
-				<li>
-				</li>
-				<li></li>
-			</ul>
-
-				<ul class='hardcoverBack'>
-					<li></li>
-					<li></li>
-				</ul>
-
-				<ul class='book_spine'>
-					<li></li>
-				</ul>
-
-       </div>
-
-	</div>
-
-	<script src=~/js/loader.js></script>
-
-	<script>
-
-		const headlines = document.getElementById("headlines");
-
-		const headlineWords = [
-			"is a bookstore.",
-			"has all your favourite books.",
-			"has all your favourite authors.",
-			"has books for all ages."
-		];
-
-		let i = 0;
-
-		headlines.innerHTML = headlineWords[0];
-
-		const changeHeadlines = () => {
-
-			headlines.classList.add("show");
-
-			headlines.innerHTML = headlineWords[i];
-
-			setTimeout(() => {headlines.classList.remove("show")}, 1800);
-		
-			if (i < headlineWords.length - 1) {
-				i++;
-			}
-			else {
-				i = 0;
-			}
-		};
-
-		setInterval(changeHeadlines, 2500);
-
-	</script>
-
-</body>
+}
+</div>
