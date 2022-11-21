@@ -22,7 +22,7 @@ namespace Knjizara.Controllers
             _context = context;
         }
 
-        // GET: Authors
+        // GET: Authorss
         public async Task<IActionResult> Index()
         {
               return _context.Authors != null ? 
